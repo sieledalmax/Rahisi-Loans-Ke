@@ -4,12 +4,24 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Secure loan eligibility processing with BRANCH LOANS">
+    <meta name="description" content="Secure loan eligibility processing with Mkopo Rahisi">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png" />
-    <title>Processing Eligibility | BRANCH LOANS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Processing Eligibility | Mkopo Rahisi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== Base Styles ===== */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -21,84 +33,105 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%);
-            color: #2c3749;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--dark);
         }
 
-        .login-container {
+        .processing-container {
             max-width: 500px;
             margin: auto;
             padding: 2.5rem;
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             text-align: center;
             position: relative;
         }
 
-        h1 {
+        .logo {
             font-size: 1.8rem;
-            color: #2c5282;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: var(--dark);
             margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .trust-seal {
             position: absolute;
             top: -20px;
             right: -20px;
-            background: #fff;
-            padding: 8px 12px;
+            background: white;
+            padding: 8px 15px;
             border-radius: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             font-size: 0.8rem;
             font-weight: 600;
-            color: #2c5282;
+            color: var(--primary);
         }
 
         .trust-seal i {
-            margin-right: 5px;
-            color: #38a169;
+            margin-right: 8px;
+            color: var(--success);
         }
 
-        .dots {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
+        .loading-animation {
+            margin: 2.5rem 0;
+            position: relative;
+            height: 80px;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: #2c5282;
+        .loading-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(37, 99, 235, 0.1);
+            border-top: 5px solid var(--primary);
             border-radius: 50%;
-            margin: 0 6px;
-            animation: bounce 1.4s infinite ease-in-out;
+            animation: spin 1.5s linear infinite;
         }
 
-        .dot:nth-child(1) {
-            animation-delay: -0.32s;
+        .loading-checkmark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
+            color: var(--success);
+            opacity: 0;
         }
 
-        .dot:nth-child(2) {
-            animation-delay: -0.16s;
-        }
-
-        @keyframes bounce {
-            0%, 80%, 100% { 
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         .message {
             font-size: 1.1rem;
             margin: 1.5rem 0;
-            color: #4a5568;
+            color: #64748b;
             min-height: 1.5rem;
+            font-weight: 500;
         }
 
         .progress-container {
@@ -108,9 +141,9 @@
         .progress-text {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.8rem;
-            color: #4a5568;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
         }
 
         .progress-bar {
@@ -123,35 +156,60 @@
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, #2c5282 0%, #2b6cb0 100%);
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
             border-radius: 4px;
             width: 0%;
-            transition: width 0.1s ease;
+            transition: width 0.3s ease;
         }
 
         .security-badge {
             display: inline-flex;
             align-items: center;
-            background: #f7fafc;
-            padding: 8px 15px;
+            background: #f8fafc;
+            padding: 10px 18px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             margin: 1rem 0;
-            color: #2c5282;
+            color: var(--primary);
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-weight: 500;
         }
 
         .security-badge i {
             margin-right: 8px;
-            color: #38a169;
+            color: var(--success);
         }
 
-        .success {
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .trust-item {
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .trust-item i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .success-message {
             display: none;
             flex-direction: column;
             align-items: center;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border-radius: 12px;
             margin: 1.5rem 0;
@@ -159,81 +217,73 @@
             overflow: hidden;
         }
 
-        .success::after {
+        .success-message::after {
             content: "";
             position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
+            top: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
         }
 
-        .success i {
+        .success-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             z-index: 1;
+            color: white;
+            animation: bounce 0.8s;
         }
 
-        .success p {
+        .success-text {
             font-size: 1.1rem;
             z-index: 1;
+            font-weight: 500;
         }
 
-        .trust-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 1.5rem 0;
-        }
-
-        .trust-item {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .trust-item i {
-            margin-right: 8px;
-            color: #2c5282;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 
+            40% {transform: translateY(-20px);} 
+            60% {transform: translateY(-10px);} 
         }
 
         .footer {
             text-align: center;
             padding: 1.5rem;
-            background: #2d3748;
+            background: var(--dark);
             color: white;
             margin-top: auto;
             font-size: 0.9rem;
         }
 
         .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
             margin-bottom: 10px;
+            flex-wrap: wrap;
         }
 
         .footer a {
-            color: #a0aec0;
+            color: #e2e8f0;
             text-decoration: none;
-            margin: 0 10px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .footer a:hover {
             color: white;
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
-            .login-container {
+            .processing-container {
                 margin: 1.5rem;
-                padding: 1.8rem;
+                padding: 2rem;
             }
             
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             
             .trust-seal {
@@ -250,28 +300,34 @@
 </head>
 
 <body class="login-body">
-    <div class="login-container">
+    <div class="processing-container">
+        <div class="logo">
+            <i class="fas fa-hand-holding-usd"></i>
+            <span>Mkopo Rahisi</span>
+        </div>
+        
         <div class="trust-seal">
-            <i>🔒</i> Secure Processing
+            <i class="fas fa-lock"></i> Secure Processing
         </div>
         
         <h1>Processing Your Application</h1>
         
         <div class="security-badge">
-            <i>✓</i> 256-bit SSL Encryption
+            <i class="fas fa-shield-alt"></i> 256-bit SSL Encryption
         </div>
         
-        <div class="dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+        <div class="loading-animation">
+            <div class="loading-circle"></div>
+            <div class="loading-checkmark">
+                <i class="fas fa-check-circle"></i>
+            </div>
         </div>
         
         <div class="message" id="message">Initializing secure connection...</div>
         
         <div class="progress-container">
             <div class="progress-text">
-                <span>Progress</span>
+                <span>Processing your request</span>
                 <span id="progressPercent">0%</span>
             </div>
             <div class="progress-bar" id="progressBar">
@@ -281,22 +337,24 @@
         
         <div class="trust-grid">
             <div class="trust-item">
-                <i>🏦</i> CBK Licensed
+                <i class="fas fa-landmark"></i> CBK Licensed
             </div>
             <div class="trust-item">
-                <i>⏱️</i> Instant Approval
+                <i class="fas fa-bolt"></i> Instant Approval
             </div>
             <div class="trust-item">
-                <i>🔐</i> Data Protected
+                <i class="fas fa-lock"></i> Data Protected
             </div>
             <div class="trust-item">
-                <i>💳</i> No Hidden Fees
+                <i class="fas fa-hand-holding-usd"></i> No Hidden Fees
             </div>
         </div>
         
-        <div class="success" id="success">
-            <i>&#10004;</i>
-            <p>Eligibility successful. You qualify for a loan.</p>
+        <div class="success-message" id="success">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <p class="success-text">Eligibility successful. You qualify for a loan!</p>
         </div>
     </div>
 
@@ -307,7 +365,7 @@
             <a href="/contact">Contact Us</a>
             <a href="/security">Security</a>
         </div>
-        <p>&copy; 2025 BRANCH LOANS. Licensed by CBK.</p>
+        <p>&copy; 2025 Mkopo Rahisi. Licensed by CBK.</p>
     </footer>
 
     <script>
@@ -342,6 +400,10 @@
                 if (percent >= 100) {
                     clearInterval(interval);
                     clearInterval(messageInterval);
+                    
+                    // Show success animation
+                    document.querySelector('.loading-circle').style.display = 'none';
+                    document.querySelector('.loading-checkmark').style.opacity = '1';
                     document.getElementById('progressBar').style.display = 'none';
                     document.getElementById('message').style.display = 'none';
                     document.getElementById('success').style.display = 'flex';

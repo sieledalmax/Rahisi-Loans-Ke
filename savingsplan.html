@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png">
-    <title>Branch - Confirmation</title>
+    <title>Confirmation - Mkopo Rahisi</title>
     <style>
         :root {
-            --primary-color: #2c5282;
-            --primary-dark: #1e3a8a;
-            --secondary-color: #e2e8f0;
-            --accent-color: #ff6b35;
-            --text-color: #2d3748;
-            --light-text: #718096;
-            --success-color: #38a169;
-            --warning-color: #dd6b20;
-            --danger-color: #e53e3e;
-            --border-radius: 8px;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #dd6b20;
+            --danger: #e53e3e;
+            --border-radius: 12px;
             --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
         }
@@ -31,8 +31,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -40,7 +40,7 @@
         }
 
         .header-banner {
-            background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 0.8rem 0;
             text-align: center;
@@ -50,7 +50,7 @@
 
         .ticker {
             background: rgba(255, 255, 255, 0.9);
-            color: var(--success-color);
+            color: var(--success);
             padding: 1rem;
             text-align: center;
             font-size: 0.95rem;
@@ -61,7 +61,6 @@
             gap: 0.8rem;
             animation: fadeInDown 0.6s ease-in-out;
             border-bottom: 1px solid rgba(209, 243, 209, 0.5);
-            backdrop-filter: blur(4px);
         }
 
         .ticker i {
@@ -83,31 +82,29 @@
             max-width: 900px;
             margin: 2rem auto;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            box-shadow: var(--box-shadow);
             flex: 1;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
         .logo {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
         .logo i {
-            font-size: 1.8rem;
+            color: var(--accent);
         }
 
         h2 {
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 1rem;
             font-size: 1.4rem;
             font-weight: 600;
@@ -115,48 +112,35 @@
 
         .info-section {
             margin-bottom: 2rem;
-            background: rgba(255, 255, 255, 0.9);
+            background: white;
             border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            box-shadow: var(--box-shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .info-section:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
         }
 
         .savings-section {
-            background: linear-gradient(135deg, rgba(44, 82, 130, 0.1) 0%, rgba(43, 108, 176, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
             padding: 1.5rem;
             border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary);
             position: relative;
             overflow: hidden;
         }
 
-        .savings-section:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%232c5282" opacity="0.05"><path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 10c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 20c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            transform: translate(30px, -30px);
-        }
-
         .info-section p {
-            color: var(--text-color);
+            color: var(--dark);
             margin-bottom: 1rem;
             font-size: 1rem;
         }
 
         .info-section strong {
-            color: var(--primary-color);
+            color: var(--primary);
             font-weight: 600;
         }
 
@@ -165,7 +149,7 @@
             align-items: center;
             justify-content: center;
             padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
             border: none;
             border-radius: var(--border-radius);
@@ -173,15 +157,14 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
             text-decoration: none;
             width: 100%;
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2c5282 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(44, 82, 130, 0.4);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
 
         .btn:active {
@@ -189,14 +172,14 @@
         }
 
         .btn.copied {
-            background: var(--success-color);
+            background: var(--success);
             color: white;
         }
 
         .payment-instructions {
-            background-color: rgba(248, 250, 252, 0.8);
+            background-color: var(--light);
             padding: 1.5rem;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary);
             border-radius: var(--border-radius);
             margin: 1.5rem 0;
         }
@@ -209,7 +192,7 @@
         }
 
         .payment-instructions p i {
-            color: var(--primary-color);
+            color: var(--primary);
             font-size: 1.1rem;
             min-width: 20px;
         }
@@ -248,7 +231,7 @@
         }
 
         .modal-content h3 {
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 1rem;
         }
 
@@ -268,7 +251,7 @@
             top: 10px;
             right: 15px;
             font-size: 1.5rem;
-            color: var(--light-text);
+            color: #64748b;
             background: none;
             border: none;
             cursor: pointer;
@@ -276,7 +259,7 @@
         }
 
         .close-btn:hover {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         .toast {
@@ -284,13 +267,13 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--danger-color);
+            background: var(--danger);
             color: white;
             padding: 1rem 1.5rem;
             border-radius: var(--border-radius);
             display: none;
             z-index: 9999;
-            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
             font-weight: 500;
         }
 
@@ -322,34 +305,15 @@
         .status-message {
             font-size: 1.3rem;
             margin-bottom: 1.5rem;
-            color: var(--text-color);
+            color: var(--dark);
             font-weight: 600;
         }
 
         .status-icon {
             font-size: 3rem;
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
-        .dot-animate {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 0 3px;
-            opacity: 0.2;
-            transition: opacity 0.3s ease;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: auto;
-            color: white;
-            font-size: 0.85rem;
-            padding: 1.5rem 0;
-            background: #2d3748;
-        }
-
-        /* New styles for improved till copy section */
         .till-container {
             display: flex;
             flex-direction: column;
@@ -363,7 +327,7 @@
             border-radius: var(--border-radius);
             font-family: monospace;
             font-size: 1.1rem;
-            color: var(--primary-color);
+            color: var(--primary);
             font-weight: 600;
             display: inline-block;
             word-break: break-all;
@@ -380,6 +344,15 @@
 
         .copy-till-btn i {
             margin-right: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            color: white;
+            font-size: 0.85rem;
+            padding: 1.5rem 0;
+            background: var(--dark);
         }
 
         @media (max-width: 768px) {
@@ -412,7 +385,6 @@
                 width: 100%;
             }
 
-            /* Improved mobile text sizing */
             h2 {
                 font-size: 1.2rem;
             }
@@ -476,8 +448,8 @@
 
     <div class="container">
         <div class="logo">
-            <i class="fas fa-code-branch"></i>
-            <span>Branch Loans</span>
+            <i class="fas fa-hand-holding-usd"></i>
+            <span>Mkopo Rahisi</span>
         </div>
 
         <div class="info-section savings-section">
@@ -485,13 +457,13 @@
             <p>
                 Based on selected loan amount of <strong id="loanAmount"></strong>,
                 <strong>Everglow Investments Inc</strong> requires you to save
-                <strong id="savingsAmount"></strong> (selected saving plan) to your Branch Loans account. This helps strengthen your credit profile. Your savings will be withdrawable exclusively upon successful completion of your first loan repayment cycle.
+                <strong id="savingsAmount"></strong> (selected saving plan) to your Mkopo Rahisi account. This helps strengthen your credit profile. Your savings will be withdrawable exclusively upon successful completion of your first loan repayment cycle.
             </p>
             <button class="btn" onclick="location.href='ccow.html'">Change Savings Plan</button>
         </div>
 
         <div class="info-section">
-            <h2>How to Save to Your Branch Loans Account</h2>
+            <h2>How to Save to Your Mkopo Rahisi Account</h2>
             <div class="payment-instructions">
                 <p><i class="fas fa-mobile-alt"></i><strong>Go to M-Pesa</strong></p>
                 <p><i class="fas fa-shopping-cart"></i><strong>Lipa na M-Pesa:</strong> Buy Goods & Services</p>
@@ -527,7 +499,7 @@
     </div>
 
     <footer class="footer">
-        &copy; 2025 Branch Loans. All rights reserved.
+        &copy; 2025 Mkopo Rahisi. Licensed by CBK. All rights reserved.
     </footer>
 
     <!-- Firebase App (Core SDK) -->
@@ -631,7 +603,7 @@
 
                 setTimeout(() => {
                     msg.textContent = "Success!";
-                    icon.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success-color)"></i>`;
+                    icon.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success)"></i>`;
 
                     // Save data to Firebase
                     const userData = {
@@ -662,5 +634,4 @@
         }
     </script>
 </body>
-
 </html>

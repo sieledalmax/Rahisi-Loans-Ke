@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png">
-    <title>Branch Loans - Quick Loan Application</title>
+    <title>Loan Amount Selection | Mkopo Rahisi</title>
     <style>
         :root {
-            --primary-color: #2a5bd7;
-            --primary-dark: #1e429f;
-            --secondary-color: #f8f9fa;
-            --accent-color: #ff6b35;
-            --text-color: #2d3748;
-            --light-text: #718096;
-            --success-color: #38a169;
-            --warning-color: #dd6b20;
-            --danger-color: #e53e3e;
-            --border-radius: 16px; /* Increased border radius for rounded edges */
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #dd6b20;
+            --danger: #e53e3e;
+            --border-radius: 16px;
             --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
         }
@@ -31,8 +31,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%); /* Bluish tint gradient */
-            color: var(--text-color);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -40,31 +40,29 @@
         }
 
         .header-banner {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 0.8rem 0;
             text-align: center;
             font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 2px 10px rgba(42, 91, 215, 0.2);
+            box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
         }
 
-        .login-container {
+        .loan-container {
             max-width: 900px;
             margin: 2rem auto;
             padding: 2.5rem;
-            background: rgba(255, 255, 255, 0.98); /* Slightly transparent white */
+            background: white;
             border-radius: var(--border-radius);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15); /* Softer shadow */
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: var(--box-shadow);
             flex: 1;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .login-container:hover {
+        .loan-container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
         }
 
         .header {
@@ -73,22 +71,22 @@
         }
 
         .logo {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
         .logo i {
-            font-size: 2.2rem;
+            color: var(--accent);
         }
 
         .header p.subtitle {
-            color: var(--light-text);
+            color: #64748b;
             font-size: 1rem;
             max-width: 600px;
             margin: 0 auto;
@@ -106,14 +104,13 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            color: var(--light-text);
+            color: #64748b;
             font-size: 0.9rem;
-            background: rgba(248, 250, 252, 0.8); /* Slightly transparent */
+            background: var(--light);
             padding: 0.8rem 1.2rem;
             border-radius: 50px;
-            border: 1px solid rgba(237, 242, 247, 0.8);
+            border: 1px solid #e2e8f0;
             transition: var(--transition);
-            backdrop-filter: blur(2px);
         }
 
         .trust-badge:hover {
@@ -122,43 +119,29 @@
         }
 
         .trust-badge i {
-            color: var(--success-color);
-            font-size: 1.3rem;
+            color: var(--success);
+            font-size: 1.1rem;
         }
 
         .intro-card {
-            background-color: rgba(240, 245, 255, 0.8); /* Slightly transparent */
-            border-left: 4px solid var(--primary-color);
+            background-color: rgba(240, 245, 255, 0.8);
+            border-left: 4px solid var(--primary);
             padding: 1.5rem;
             border-radius: var(--border-radius);
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(2px);
-        }
-
-        .intro-card:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%232a5bd7" opacity="0.05"><path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 10c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 20c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            transform: translate(30px, -30px);
         }
 
         .intro-card p {
-            color: var(--text-color);
+            color: var(--dark);
             font-size: 1.05rem;
             position: relative;
             z-index: 1;
         }
 
         .intro-card p strong {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         .amounts {
@@ -175,21 +158,20 @@
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent */
+            background-color: white;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(2px);
         }
 
         .amount-button:hover {
-            border-color: var(--primary-color);
+            border-color: var(--primary);
             transform: translateY(-3px);
             box-shadow: var(--box-shadow);
         }
 
         .amount-button.active {
-            border-color: var(--primary-color);
-            background-color: rgba(240, 245, 255, 0.8); /* Slightly transparent */
+            border-color: var(--primary);
+            background-color: rgba(240, 245, 255, 0.8);
         }
 
         .amount-button.active:after {
@@ -199,7 +181,7 @@
             right: 8px;
             width: 22px;
             height: 22px;
-            background: var(--primary-color);
+            background: var(--primary);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -210,7 +192,7 @@
 
         .amount-button strong {
             font-size: 1.3rem;
-            color: var(--primary-color);
+            color: var(--primary);
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
@@ -218,39 +200,38 @@
 
         .amount-button .loan-limit {
             font-size: 0.95rem;
-            color: var(--light-text);
+            color: #64748b;
         }
 
         .note-box {
             margin-top: 2rem;
-            background-color: rgba(255, 250, 240, 0.8); /* Slightly transparent */
-            border-left: 4px solid var(--warning-color);
+            background-color: rgba(255, 250, 240, 0.8);
+            border-left: 4px solid var(--warning);
             padding: 1.2rem;
             border-radius: var(--border-radius);
             display: flex;
             gap: 1rem;
-            backdrop-filter: blur(2px);
         }
 
         .note-box i {
-            color: var(--warning-color);
+            color: var(--warning);
             font-size: 1.3rem;
             flex-shrink: 0;
             margin-top: 0.2rem;
         }
 
         .note-box p {
-            color: var(--text-color);
+            color: var(--dark);
             font-size: 0.95rem;
         }
 
         .warning-message {
             display: block;
-            color: var(--danger-color);
+            color: var(--danger);
             font-size: 0.85rem;
             margin-top: 0.8rem;
             font-weight: 600;
-            background: rgba(255, 245, 245, 0.8); /* Slightly transparent */
+            background: rgba(255, 245, 245, 0.8);
             padding: 0.4rem;
             border-radius: 4px;
         }
@@ -265,7 +246,7 @@
             align-items: center;
             justify-content: center;
             padding: 1rem 2.5rem;
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
             border: none;
             border-radius: 50px;
@@ -273,15 +254,14 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(42, 91, 215, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
             position: relative;
             overflow: hidden;
         }
 
         .proceed-button:hover {
-            background-color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(42, 91, 215, 0.4);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
 
         .proceed-button:active {
@@ -289,39 +269,10 @@
         }
 
         .proceed-button:disabled {
-            background-color: #cbd5e0;
+            background: #cbd5e0;
             cursor: not-allowed;
             box-shadow: none;
             transform: none;
-        }
-
-        .proceed-button:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%, -50%);
-            transform-origin: 50% 50%;
-        }
-
-        .proceed-button:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(20, 20);
-                opacity: 0;
-            }
         }
 
         .btn-spinner {
@@ -338,7 +289,7 @@
         .toast {
             visibility: hidden;
             min-width: 300px;
-            background-color: var(--danger-color);
+            background-color: var(--danger);
             color: white;
             text-align: center;
             border-radius: var(--border-radius);
@@ -350,9 +301,12 @@
             transform: translateX(-50%);
             font-size: 1rem;
             font-weight: 500;
-            box-shadow: 0 8px 25px rgba(229, 62, 62, 0.3);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
             opacity: 0;
             transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .toast.show {
@@ -364,10 +318,10 @@
         .footer {
             text-align: center;
             margin-top: 3rem;
-            color: var(--light-text);
+            color: #64748b;
             font-size: 0.85rem;
             padding: 1.5rem 0;
-            border-top: 1px solid rgba(237, 242, 247, 0.5); /* Slightly transparent */
+            border-top: 1px solid #e2e8f0;
         }
 
         .footer-links {
@@ -379,13 +333,13 @@
         }
 
         .footer-links a {
-            color: var(--light-text);
+            color: #64748b;
             text-decoration: none;
             transition: color 0.2s;
         }
 
         .footer-links a:hover {
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: underline;
         }
 
@@ -394,10 +348,9 @@
         }
 
         @media (max-width: 768px) {
-            .login-container {
+            .loan-container {
                 margin: 1rem;
                 padding: 1.8rem;
-                border-radius: 12px; /* Keep rounded edges on mobile */
             }
 
             .amounts {
@@ -428,11 +381,11 @@
         Fast and secure loan processing • 100% online application
     </div>
 
-    <div class="login-container">
+    <div class="loan-container">
         <div class="header">
             <div class="logo">
-                <i class="fas fa-code-branch"></i>
-                <span>Branch Loans</span>
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>Mkopo Rahisi</span>
             </div>
             <p class="subtitle">Get the financial support you need with our simple, transparent loan process</p>
         </div>
@@ -518,7 +471,7 @@
                 <a href="#">Contact Us</a>
             </div>
             <div class="copyright">
-                © 2025 Branch Loans. All rights reserved.
+                © 2025 Mkopo Rahisi. Licensed by CBK. All rights reserved.
             </div>
         </div>
     </div>
@@ -608,7 +561,7 @@
 
         function showToast(message) {
             const toast = document.getElementById('toast');
-            toast.textContent = message;
+            toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
             toast.className = "toast show";
 
             setTimeout(() => {
@@ -617,5 +570,4 @@
         }
     </script>
 </body>
-
 </html>

