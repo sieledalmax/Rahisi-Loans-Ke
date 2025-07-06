@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png">
+    <title>Branch Loans - Quick Loan Application</title>
+    <style>
+        :root {
+            --primary-color: #2a5bd7;
+            --primary-dark: #1e429f;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff6b35;
+            --text-color: #2d3748;
+            --light-text: #718096;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --danger-color: #e53e3e;
+            --border-radius: 16px; /* Increased border radius for rounded edges */
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%); /* Bluish tint gradient */
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-banner {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(42, 91, 215, 0.2);
+        }
+
+        .login-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.98); /* Slightly transparent white */
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15); /* Softer shadow */
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            flex: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2.2rem;
+        }
+
+        .header p.subtitle {
+            color: var(--light-text);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            background: rgba(248, 250, 252, 0.8); /* Slightly transparent */
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(237, 242, 247, 0.8);
+            transition: var(--transition);
+            backdrop-filter: blur(2px);
+        }
+
+        .trust-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .trust-badge i {
+            color: var(--success-color);
+            font-size: 1.3rem;
+        }
+
+        .intro-card {
+            background-color: rgba(240, 245, 255, 0.8); /* Slightly transparent */
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+
+        .intro-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%232a5bd7" opacity="0.05"><path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 10c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 20c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: translate(30px, -30px);
+        }
+
+        .intro-card p {
+            color: var(--text-color);
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .intro-card p strong {
+            color: var(--primary-color);
+        }
+
+        .amounts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+
+        .amount-button {
+            padding: 1.5rem 0.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent */
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+
+        .amount-button:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .amount-button.active {
+            border-color: var(--primary-color);
+            background-color: rgba(240, 245, 255, 0.8); /* Slightly transparent */
+        }
+
+        .amount-button.active:after {
+            content: "✓";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .amount-button strong {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .amount-button .loan-limit {
+            font-size: 0.95rem;
+            color: var(--light-text);
+        }
+
+        .note-box {
+            margin-top: 2rem;
+            background-color: rgba(255, 250, 240, 0.8); /* Slightly transparent */
+            border-left: 4px solid var(--warning-color);
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            display: flex;
+            gap: 1rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .note-box i {
+            color: var(--warning-color);
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .note-box p {
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .warning-message {
+            display: block;
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+            font-weight: 600;
+            background: rgba(255, 245, 245, 0.8); /* Slightly transparent */
+            padding: 0.4rem;
+            border-radius: 4px;
+        }
+
+        .proceed-section {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .proceed-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(42, 91, 215, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proceed-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 91, 215, 0.4);
+        }
+
+        .proceed-button:active {
+            transform: translateY(0);
+        }
+
+        .proceed-button:disabled {
+            background-color: #cbd5e0;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .proceed-button:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        .proceed-button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .btn-spinner {
+            display: none;
+            margin-left: 12px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            visibility: hidden;
+            min-width: 300px;
+            background-color: var(--danger-color);
+            color: white;
+            text-align: center;
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(229, 62, 62, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--light-text);
+            font-size: 0.85rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(237, 242, 247, 0.5); /* Slightly transparent */
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 1rem;
+                padding: 1.8rem;
+                border-radius: 12px; /* Keep rounded edges on mobile */
+            }
+
+            .amounts {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .trust-badge {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .proceed-button {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="login-body">
+    <div class="header-banner">
+        Fast and secure loan processing • 100% online application
+    </div>
+
+    <div class="login-container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-code-branch"></i>
+                <span>Branch Loans</span>
+            </div>
+            <p class="subtitle">Get the financial support you need with our simple, transparent loan process</p>
+        </div>
+
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <i class="fas fa-lock"></i>
+                <span>256-bit Encryption</span>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-bolt"></i>
+                <span>Instant Decisions</span>
+            </div>
+            <div class="trust-badge">
+                <i class="fas fa-star"></i>
+                <span>4.8/5 Customer Rating</span>
+            </div>
+        </div>
+
+        <div class="intro-card">
+            <p>Dear customer, you qualify for a loan of up to <strong>Ksh 14,500</strong>. Select your preferred savings plan below to see your corresponding loan limit and continue with your application.</p>
+        </div>
+
+        <div class="amounts">
+            <div class="amount-button">
+                <strong>Ksh 150</strong>
+                <span class="loan-limit">Loan limit: Ksh 2,560</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 190</strong>
+                <span class="loan-limit">Loan limit: Ksh 4,230</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 250</strong>
+                <span class="loan-limit">Loan limit: Ksh 6,760</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 320</strong>
+                <span class="loan-limit">Loan limit: Ksh 9,030</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 460</strong>
+                <span class="loan-limit">Loan limit: Ksh 10,660</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 960</strong>
+                <span class="loan-limit">Loan limit: Ksh 20,500</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 1,260</strong>
+                <span class="loan-limit">Loan limit: Ksh 25,500</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 1,550</strong>
+                <span class="loan-limit">Loan limit: Ksh 30,500</span>
+            </div>
+            <div class="amount-button">
+                <strong>Ksh 2,050</strong>
+                <span class="loan-limit">Loan limit: Ksh 34,500</span>
+                <span id="warning-span" class="warning-message" style="display: none;">Only existing members allowed</span>
+            </div>
+        </div>
+
+        <div class="note-box">
+            <i class="fas fa-lightbulb"></i>
+            <p>Higher savings amounts qualify you for larger loans. Your selected savings amount will be automatically deducted from your loan disbursement.</p>
+        </div>
+
+        <div class="proceed-section">
+            <button class="proceed-button">
+                <span class="btn-text">Continue Application</span>
+                <span class="btn-spinner"><i class="fas fa-spinner"></i></span>
+            </button>
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">How It Works</a>
+                <a href="#">Loan Calculator</a>
+                <a href="#">FAQs</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="copyright">
+                © 2025 Branch Loans. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Variable to store the selected amount and loan limit
+        let selectedAmount = null;
+        let selectedLoanLimit = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to handle amount selection and session storage
+            function handleSelection(amount, loanLimit) {
+                // Remove active class from all buttons
+                document.querySelectorAll('.amount-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                event.currentTarget.classList.add('active');
+
+                // Set the selected amount and loan limit
+                selectedAmount = amount;
+                selectedLoanLimit = loanLimit;
+
+                // Check if the last option is selected (Ksh 2050)
+                if (amount === 'Ksh 2,050') {
+                    // Show the warning message
+                    const warningSpan = document.getElementById('warning-span');
+                    warningSpan.style.display = 'block';
+                } else {
+                    // Hide any warning message
+                    const warningSpan = document.getElementById('warning-span');
+                    warningSpan.style.display = 'none';
+                }
+            }
+
+            // Function to handle proceed button click
+            function handleProceed() {
+                if (selectedAmount === 'Ksh 2,050') {
+                    showToast('Only existing members can select this option');
+                    return;
+                }
+                
+                if (selectedAmount && selectedLoanLimit) {
+                    // Save the selected amount and loan limit in sessionStorage
+                    sessionStorage.setItem('selectedAmount', selectedAmount);
+                    sessionStorage.setItem('loanLimit', selectedLoanLimit);
+
+                    const button = document.querySelector('.proceed-button');
+                    const btnText = button.querySelector('.btn-text');
+                    const spinner = button.querySelector('.btn-spinner');
+
+                    btnText.textContent = 'Processing Your Application...';
+                    spinner.style.display = 'inline-block';
+                    button.disabled = true;
+                    
+                    // Simulate processing delay
+                    setTimeout(() => {
+                        window.location.href = 'summary.html';
+                        spinner.style.display = 'none';
+                    }, 3500);
+
+                } else {
+                    showToast('Please select a savings amount to continue');
+                }
+            }
+
+            // Attach event listeners to the amount buttons
+            const amountButtons = document.querySelectorAll('.amount-button');
+            amountButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Extract the amount and loan limit from button text
+                    const amount = this.querySelector('strong').textContent;
+                    const loanLimit = this.querySelector('.loan-limit').textContent.replace('Loan limit: ', '').trim();
+
+                    // Call handleSelection with extracted values
+                    handleSelection(amount, loanLimit);
+                });
+            });
+
+            // Proceed button click listener
+            const proceedButton = document.querySelector('.proceed-button');
+            proceedButton.addEventListener('click', handleProceed);
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = "toast show";
+
+            setTimeout(() => {
+                toast.className = toast.className.replace("show", "");
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

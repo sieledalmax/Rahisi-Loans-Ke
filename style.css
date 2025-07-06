@@ -1,0 +1,524 @@
+/* Base styles for the page */
+
+/* Base styles for the page */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+    color: #003366;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    /* Centers content vertically */
+    align-items: center;
+    /* Centers content horizontally */
+}
+
+/* Container to ensure horizontal centering */
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 51, 102, 0.1);
+    flex: 1;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #007acc;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #007acc;
+    }
+    to {
+        text-shadow: 0 0 20px #00bfff;
+    }
+}
+
+.amounts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.amount-button {
+    display: inline-block;
+    margin: 0.5rem;
+    padding: 1rem 2rem;
+    background-color: #007acc;
+    color: white;
+    width: 70%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.amount-button:hover {
+    background-color: #005b99;
+    border-radius: 1dp;
+    border-color: #86f083;
+    border-style: solid;
+}
+
+.note {
+    font-size: 1rem;
+    color: #444;
+    margin-top: 1.5rem;
+}
+
+/* Adjusted style for the Proceed button */
+
+.proceed-button {
+    width: 80%;
+    /* Set width to 80% */
+    margin: 20px auto;
+    /* Center horizontally */
+    padding: 12px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.proceed-button:hover {
+    background-color: #005b99;
+}
+
+.checkbox-wrapper {
+    margin: 1.5rem 0;
+    background-color: #e6f7ff;
+    border-left: 4px solid #007acc;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 3rem;
+    padding: 1rem;
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 4px solid #007acc;
+}
+
+/* Loader styling */
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 10px solid #f3f3f3;
+    /* Light grey background for the spinner */
+    border-top: 10px solid #007acc;
+    /* Blue color for the rotating part */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1.5s linear infinite;
+    z-index: 9999;
+    background-color: white;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.login-body {
+    background: linear-gradient(to bottom right, #e6f3ff, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Centers it horizontally and vertically */
+    min-height: 100vh;
+    /* Ensures the body takes full height */
+    padding: 2rem 1rem;
+}
+
+/* Container for login */
+
+.login-container {
+    background-color: white;
+    border: 1px solid #cce7f3;
+    border-radius: 15px;
+    padding: 30px 25px;
+    width: 100%;
+    /* Ensures the container takes full width */
+    max-width: 600px;
+    /* Restrict width on larger screens */
+    box-shadow: 0 0 15px rgba(0, 122, 204, 0.2);
+}
+
+/* Responsive adjustments for smaller screens */
+
+@media (max-width: 600px) {
+    .login-container {
+        padding: 20px 15px;
+        /* Less padding on smaller screens */
+        max-width: 90%;
+        /* Make it a bit smaller on mobile */
+    }
+}
+
+.login-container .title {
+    text-align: center;
+    color: #007acc;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    display: block;
+    margin-top: 15px;
+    color: #007acc;
+    font-weight: bold;
+}
+
+.login-form input {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #aad8f5;
+    border-radius: 8px;
+    background-color: #f9fcff;
+}
+
+.login-form select {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #aad8f5;
+    border-radius: 8px;
+    background-color: #f9fcff;
+    color: #003366;
+    font-size: 1rem;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 8px;
+}
+
+.forgot-password a {
+    font-size: 0.9em;
+    color: #007acc;
+    text-decoration: none;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #005b99;
+}
+
+.no-account {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.95em;
+}
+
+.no-account a {
+    color: #007acc;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Responsive footer styling */
+
+.footer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #007acc;
+    padding: 15px;
+    background: linear-gradient(to right, #e0f0ff, #ffffff);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Footer responsive adjustments */
+
+@media (max-width: 600px) {
+    .footer {
+        font-size: 0.8em;
+        padding: 10px;
+    }
+}
+
+.overlay-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.spinner-beautiful {
+    width: 70px;
+    height: 70px;
+    border: 6px solid #cce7f3;
+    border-top: 6px solid #007acc;
+    border-radius: 50%;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.btn-spinner {
+    display: none;
+    margin-left: 10px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background-color: #007acc;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px);
+    }
+}
+
+.message {
+    font-size: 1.2em;
+    color: #444;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    width: 80%;
+    height: 20px;
+    margin: 20px auto;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background-color: #007acc;
+    transition: width 0.1s linear;
+}
+
+.success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.success i {
+    font-size: 3em;
+    color: green;
+    margin-bottom: 10px;
+}
+
+.success p {
+    color: #2d7d46;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Style for the warning message */
+
+/* Style for the selected amount button */
+
+.amount-button.selected {
+    background-color: #007acc;
+    color: white;
+    border: 2px solid #005fa3;
+}
+
+/* Style for the warning message */
+
+/* Style for the warning message */
+
+.warning-message {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffcc00;
+    color: #8a5c00;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section {
+    background-color: #f9f9f9;
+    /* Light grey background */
+    border: 1px solid #ddd;
+    /* Light border */
+    border-radius: 10px;
+    /* Rounded corners */
+    padding: 20px;
+    /* Space inside the box */
+    margin-bottom: 20px;
+    /* Space between sections */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    /* Soft shadow */
+}
+
+.section {
+    background: #f1f9ff;
+    border: 1px solid #cce7ff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    font-size: 1.5rem;
+    color: #005b99;
+    margin-bottom: 10px;
+}
+
+.section p {
+    color: #555;
+}
+
+/* Checkbox */
+
+.checkbox-wrapper {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.checkbox-wrapper label {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Button */
+
+button#startBtn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    background: linear-gradient(to right, #007acc, #00c6ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.4s;
+}
+
+button#startBtn:hover {
+    background: linear-gradient(to right, #00c6ff, #007acc);
+}
+
+/* Loader */
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #007acc;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
