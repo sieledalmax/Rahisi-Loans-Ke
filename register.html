@@ -12,8 +12,8 @@
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
 
     <!-- PWA Configuration -->
@@ -428,7 +428,7 @@
                 <div class="phone-input-container">
                     <span class="phone-prefix">+254</span>
                     <input type="text" id="mpesa" name="mpesa" placeholder="7XXXXXXXX or 1XXXXXXXX" required 
-                           pattern="[0-9]{9}" 
+                           pattern="[0-9]{9,10}" 
                            title="Enter a valid Kenyan phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)" 
                            inputmode="numeric" />
                 </div>
@@ -508,213 +508,262 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDVJCpz7E6kKKxJHDJkcA5xCFVdfi2XoXs",
-            authDomain: "fedha-loans-straight-to-m-pesa.firebaseapp.com",
-            databaseURL: "https://fedha-loans-straight-to-m-pesa-default-rtdb.firebaseio.com",
-            projectId: "fedha-loans-straight-to-m-pesa",
-            storageBucket: "fedha-loans-straight-to-m-pesa.appspot.com",
-            messagingSenderId: "467457528567",
-            appId: "1:467457528567:web:ad9c6b8d592be989cdb9f2",
-            measurementId: "G-TGMNGTBD03"
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyCASu52RKh0cUP74lNVONDxkH0IKC7B9Ak",
+                authDomain: "mkopo-rahisi-2dee5.firebaseapp.com",
+                projectId: "mkopo-rahisi-2dee5",
+                storageBucket: "mkopo-rahisi-2dee5.firebasestorage.app",
+                messagingSenderId: "463971994215",
+                appId: "1:463971994215:web:2d3ef1001cee2b201be2c2",
+                measurementId: "G-BRKFJJR3BM"
+            };
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const auth = firebase.auth();
-        const analytics = firebase.analytics();
-
-        // Show toast message
-        function showToast(message, isError = true) {
-            const toast = document.getElementById('toast');
-            toast.innerHTML = `<i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
-            toast.style.backgroundColor = isError ? 'var(--error)' : 'var(--success)';
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 3000);
-        }
-
-        // Format phone number to email format for Firebase Auth
-        function formatPhoneForAuth(phone) {
-            // Remove all non-digit characters
-            phone = phone.replace(/\D/g, '');
+            // Initialize Firebase
+            let app, db, auth, analytics;
             
-            // Handle all Kenyan phone number formats:
-            // 7..., 07..., 1..., 01..., 254...
-            if (phone.startsWith('0')) {
-                // Remove leading 0 and take next 9 digits
-                phone = phone.substring(1, 10);
-            } else if (phone.startsWith('254')) {
-                // Remove 254 and take next 9 digits
-                phone = phone.substring(3, 12);
-            }
-            
-            // Ensure we have exactly 9 digits
-            if (phone.length !== 9) {
-                throw new Error("Invalid phone number length");
-            }
-            
-            // Return as email format
-            return `${phone}@mkoporahisi.com`;
-        }
-
-        // Register Service Worker for PWA
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                registerServiceWorker();
-            });
-        }
-
-        async function registerServiceWorker() {
             try {
-                const registration = await navigator.serviceWorker.register('/sw.js');
-                console.log('ServiceWorker registration successful');
+                app = firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                db = firebase.firestore();
+                analytics = firebase.analytics();
+                
+                console.log('Firebase initialized successfully');
+            } catch (error) {
+                console.error('Firebase initialization error:', error);
+                showToast('Initialization error. Please refresh the page.');
+                return;
+            }
 
-                // Check if PWA is already installed
-                window.addEventListener('beforeinstallprompt', (e) => {
-                    e.preventDefault();
-                    const installButton = document.getElementById('installButton');
-                    
-                    // Only show the button if not already installed
-                    if (!window.matchMedia('(display-mode: standalone)').matches) {
-                        installButton.style.display = 'flex';
-                        setTimeout(() => installButton.classList.add('show'), 500);
-                        
-                        installButton.addEventListener('click', () => {
-                            e.prompt();
-                            installButton.style.display = 'none';
-                        });
-                        
-                        e.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('User accepted install prompt');
-                                analytics.logEvent('pwa_install_accepted');
-                            } else {
-                                console.log('User dismissed install prompt');
-                                analytics.logEvent('pwa_install_declined');
-                            }
-                        });
-                    }
+            // Show toast message
+            function showToast(message, isError = true) {
+                const toast = document.getElementById('toast');
+                toast.innerHTML = `<i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
+                toast.style.backgroundColor = isError ? 'var(--error)' : 'var(--success)';
+                toast.classList.add("show");
+                setTimeout(() => toast.classList.remove("show"), 3000);
+            }
+
+            // Format phone number to email format for Firebase Auth
+            function formatPhoneForAuth(phone) {
+                // Remove all non-digit characters
+                phone = phone.replace(/\D/g, '');
+                
+                // Handle all Kenyan phone number formats:
+                if (phone.startsWith('254')) {
+                    phone = phone.substring(3); // Remove 254 prefix
+                } else if (phone.startsWith('0')) {
+                    phone = phone.substring(1); // Remove leading 0
+                }
+                
+                // Ensure we have exactly 9 digits
+                if (phone.length !== 9) {
+                    throw new Error("Invalid phone number length");
+                }
+                
+                // Return as email format
+                return `${phone}@mkoporahisi.com`;
+            }
+
+            // Get clean 9-digit phone number for storage
+            function getCleanPhoneNumber(phone) {
+                // Remove all non-digit characters
+                phone = phone.replace(/\D/g, '');
+                
+                // Handle all Kenyan phone number formats:
+                if (phone.startsWith('254')) {
+                    return phone.substring(3); // Remove 254 prefix
+                } else if (phone.startsWith('0')) {
+                    return phone.substring(1); // Remove leading 0
+                }
+                
+                // If it's already 9 digits (7... or 1...)
+                return phone;
+            }
+
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    registerServiceWorker();
                 });
-            } catch (err) {
-                console.log('ServiceWorker registration failed: ', err);
-            }
-        }
-
-        // Check if app is launched as PWA
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA was installed');
-            const installButton = document.getElementById('installButton');
-            if (installButton) {
-                installButton.style.display = 'none';
-            }
-            analytics.logEvent('pwa_installed');
-        });
-
-        // Handle form submission
-        document.getElementById('registerForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const form = e.target;
-            const mpesaInput = document.getElementById('mpesa');
-            const mpesa = mpesaInput.value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            // Validate phone number format (accepts 7..., 07..., 1..., 01...)
-            if (!/^[0-9]{9}$/.test(mpesa)) {
-                showToast("Please enter a valid Kenyan phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)");
-                return;
             }
 
-            if (password !== confirmPassword) {
-                showToast("Passwords do not match.");
-                return;
+            async function registerServiceWorker() {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('ServiceWorker registration successful');
+
+                    // Check if PWA is already installed
+                    window.addEventListener('beforeinstallprompt', (e) => {
+                        e.preventDefault();
+                        const installButton = document.getElementById('installButton');
+                        
+                        // Only show the button if not already installed
+                        if (!window.matchMedia('(display-mode: standalone)').matches) {
+                            installButton.style.display = 'flex';
+                            setTimeout(() => installButton.classList.add('show'), 500);
+                            
+                            installButton.addEventListener('click', () => {
+                                e.prompt();
+                                installButton.style.display = 'none';
+                            });
+                            
+                            e.userChoice.then((choiceResult) => {
+                                if (choiceResult.outcome === 'accepted') {
+                                    console.log('User accepted install prompt');
+                                    if (analytics) {
+                                        analytics.logEvent('pwa_install_accepted');
+                                    }
+                                } else {
+                                    console.log('User dismissed install prompt');
+                                    if (analytics) {
+                                        analytics.logEvent('pwa_install_declined');
+                                    }
+                                }
+                            });
+                        }
+                    });
+                } catch (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                }
             }
 
-            if (password.length < 6) {
-                showToast("Password must be at least 6 characters");
-                return;
-            }
+            // Check if app is launched as PWA
+            window.addEventListener('appinstalled', () => {
+                console.log('PWA was installed');
+                const installButton = document.getElementById('installButton');
+                if (installButton) {
+                    installButton.style.display = 'none';
+                }
+                if (analytics) {
+                    analytics.logEvent('pwa_installed');
+                }
+            });
 
-            if (form.checkValidity()) {
-                document.getElementById('loadingOverlay').style.display = 'flex';
-                document.getElementById('registerBtn').disabled = true;
+            // Handle phone number input formatting
+            document.getElementById('mpesa').addEventListener('input', (e) => {
+                // Remove any non-digit characters
+                let value = e.target.value.replace(/\D/g, '');
+                
+                // Handle all Kenyan formats: 7..., 07..., 1..., 01...
+                if (value.startsWith('0')) {
+                    // Keep the 0 but limit to 10 digits (0 + 9 digits)
+                    value = value.substring(0, 10);
+                } else {
+                    // For numbers starting with 1, 7, or 254, limit to 9 digits
+                    value = value.substring(0, 9);
+                }
+                
+                e.target.value = value;
+            });
+
+            // Handle form submission
+            document.getElementById('registerForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const form = e.target;
+                const mpesaInput = document.getElementById('mpesa');
+                const rawMpesa = mpesaInput.value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
 
                 try {
-                    // Create user with Firebase Auth
-                    const email = formatPhoneForAuth(mpesa);
-                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                    const user = userCredential.user;
+                    // First check if Firebase auth is available
+                    if (!auth) {
+                        throw new Error('Authentication service not available');
+                    }
 
-                    // Save additional user data to Realtime Database
-                    const userData = {
-                        name: document.getElementById('name').value,
-                        county: document.getElementById('county').value,
-                        mpesa: mpesa,
-                        id: document.getElementById('id').value,
-                        gender: document.getElementById('gender').value,
-                        dob: document.getElementById('dob').value,
-                        marital: document.getElementById('marital').value,
-                        yere: "null",
-                        uid: user.uid
-                    };
-
-                    await db.ref('users/' + mpesa).set(userData);
+                    // Get clean 9-digit phone number
+                    const cleanMpesa = getCleanPhoneNumber(rawMpesa);
                     
-                    // Log successful registration
-                    analytics.logEvent('sign_up', { method: 'phone' });
+                    // Validate phone number format
+                    if (!/^[0-9]{9}$/.test(cleanMpesa)) {
+                        showToast("Please enter a valid Kenyan phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)");
+                        return;
+                    }
 
-                    // Store user data in sessionStorage
-                    sessionStorage.setItem('mpesaNumber', mpesa);
-                    sessionStorage.setItem('accountName', userData.name);
-                    sessionStorage.setItem('user', JSON.stringify({
-                        phone: `+254${mpesa.replace(/^0/, '')}`,
-                        uid: user.uid
-                    }));
+                    if (password !== confirmPassword) {
+                        showToast("Passwords do not match.");
+                        return;
+                    }
 
-                    showToast("Registration successful!", false);
-                    
-                    setTimeout(() => {
+                    if (password.length < 6) {
+                        showToast("Password must be at least 6 characters");
+                        return;
+                    }
+
+                    if (form.checkValidity()) {
+                        document.getElementById('loadingOverlay').style.display = 'flex';
+                        document.getElementById('registerBtn').disabled = true;
+
+                        // Create user with Firebase Auth
+                        const email = formatPhoneForAuth(cleanMpesa);
+                        console.log("Registering with email:", email);
+                        
+                        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                        const user = userCredential.user;
+
+                        // Save additional user data to Firestore
+                        const userData = {
+                            name: document.getElementById('name').value,
+                            county: document.getElementById('county').value,
+                            mpesa: cleanMpesa, // Store just the 9-digit number
+                            id: document.getElementById('id').value,
+                            gender: document.getElementById('gender').value,
+                            dob: document.getElementById('dob').value,
+                            marital: document.getElementById('marital').value,
+                            yere: "null",
+                            uid: user.uid,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        };
+
+                        // Save to Firestore in 'user-data' collection
+                        await db.collection('user-data').doc(cleanMpesa).set(userData);
+                        
+                        // Log successful registration
+                        if (analytics) {
+                            analytics.logEvent('sign_up', { method: 'phone' });
+                        }
+
+                        // Store user data in sessionStorage
+                        sessionStorage.setItem('mpesaNumber', cleanMpesa);
+                        sessionStorage.setItem('accountName', userData.name);
+                        sessionStorage.setItem('user', JSON.stringify({
+                            phone: cleanMpesa,
+                            uid: user.uid
+                        }));
+
+                        showToast("Registration successful!", false);
+                        
+                        // Redirect to eligibility page
                         window.location.href = 'eligibility.html';
-                    }, 1000);
+                    } else {
+                        form.reportValidity();
+                    }
                 } catch (error) {
                     console.error("Registration error:", error);
-                    analytics.logEvent('sign_up_failed', { error: error.code });
+                    if (analytics) {
+                        analytics.logEvent('sign_up_failed', { error: error.code });
+                    }
 
                     // Handle specific Firebase errors
                     if (error.code === 'auth/email-already-in-use') {
                         showToast("This phone number is already registered");
                     } else if (error.code === 'auth/weak-password') {
                         showToast("Password should be at least 6 characters");
+                    } else if (error.code === 'auth/invalid-email') {
+                        showToast("Invalid phone number format");
+                    } else if (error.message === 'Authentication service not available') {
+                        showToast("Authentication service unavailable. Please refresh the page.");
                     } else {
-                        showToast("Registration failed. Please try again.");
+                        showToast(`Registration failed: ${error.message}`);
                     }
                 } finally {
                     document.getElementById('loadingOverlay').style.display = 'none';
                     document.getElementById('registerBtn').disabled = false;
                 }
-            } else {
-                form.reportValidity();
-            }
-        });
-
-        // Handle phone number input formatting
-        document.getElementById('mpesa').addEventListener('input', (e) => {
-            // Remove any non-digit characters
-            let value = e.target.value.replace(/\D/g, '');
-            
-            // Handle all Kenyan formats: 7..., 07..., 1..., 01...
-            if (value.startsWith('0')) {
-                // Keep the 0 but limit to 10 digits (0 + 9 digits)
-                value = value.substring(0, 10);
-            } else {
-                // For numbers starting with 1, 7, or 254, limit to 9 digits
-                value = value.substring(0, 9);
-            }
-            
-            e.target.value = value;
+            });
         });
     </script>
 </body>

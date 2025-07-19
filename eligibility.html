@@ -17,12 +17,6 @@
     <meta name="apple-mobile-web-app-title" content="Mkopo Rahisi">
     <link rel="apple-touch-icon" href="icons/icon.192.png">
     <meta name="theme-color" content="#2563eb">
-    
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
 
     <style>
         :root {
@@ -262,11 +256,11 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: var(--error);
+            background-color: var(--danger);
             color: white;
             padding: 10px 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: 9999;
@@ -479,176 +473,107 @@
     <div id="toast" class="toast"></div>
 
     <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDVJCpz7E6kKKxJHDJkcA5xCFVdfi2XoXs",
-            authDomain: "fedha-loans-straight-to-m-pesa.firebaseapp.com",
-            databaseURL: "https://fedha-loans-straight-to-m-pesa-default-rtdb.firebaseio.com",
-            projectId: "fedha-loans-straight-to-m-pesa",
-            storageBucket: "fedha-loans-straight-to-m-pesa.appspot.com",
-            messagingSenderId: "467457528567",
-            appId: "1:467457528567:web:ad9c6b8d592be989cdb9f2",
-            measurementId: "G-TGMNGTBD03"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-        const analytics = firebase.analytics();
-
-        // Show toast message
-        function showToast(message, isError = true) {
-            const toast = document.getElementById('toast');
-            toast.innerHTML = `<i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
-            toast.style.backgroundColor = isError ? 'var(--error)' : 'var(--success)';
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 3000);
-        }
-
-        // Handle phone number input formatting
-        document.getElementById('refPhone').addEventListener('input', (e) => {
-            // Remove any non-digit characters
-            let value = e.target.value.replace(/\D/g, '');
-            
-            // Handle all Kenyan formats: 7..., 07..., 1..., 01...
-            if (value.startsWith('0')) {
-                // Keep the 0 but limit to 10 digits (0 + 9 digits)
-                value = value.substring(0, 10);
-            } else {
-                // For numbers starting with 1, 7, or 254, limit to 9 digits
-                value = value.substring(0, 9);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show toast message
+            function showToast(message, isError = true) {
+                const toast = document.getElementById('toast');
+                toast.innerHTML = `<i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
+                toast.style.backgroundColor = isError ? 'var(--danger)' : 'var(--success)';
+                toast.classList.add("show");
+                setTimeout(() => toast.classList.remove("show"), 3000);
             }
-            
-            e.target.value = value;
-        });
 
-        // Register Service Worker for PWA
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                registerServiceWorker();
+            // Handle phone number input formatting
+            document.getElementById('refPhone').addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.startsWith('0')) {
+                    value = value.substring(0, 10);
+                } else {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value;
             });
-        }
 
-        async function registerServiceWorker() {
-            try {
-                const registration = await navigator.serviceWorker.register('/sw.js');
-                console.log('ServiceWorker registration successful');
-
-                // Check if PWA is already installed
-                window.addEventListener('beforeinstallprompt', (e) => {
-                    e.preventDefault();
-                    const installButton = document.getElementById('installButton');
-                    
-                    // Only show the button if not already installed
-                    if (!window.matchMedia('(display-mode: standalone)').matches) {
-                        installButton.style.display = 'flex';
-                        setTimeout(() => installButton.classList.add('show'), 500);
-                        
-                        installButton.addEventListener('click', () => {
-                            e.prompt();
-                            installButton.style.display = 'none';
-                        });
-                        
-                        e.userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                                console.log('User accepted install prompt');
-                                analytics.logEvent('pwa_install_accepted');
-                            } else {
-                                console.log('User dismissed install prompt');
-                                analytics.logEvent('pwa_install_declined');
-                            }
-                        });
-                    }
-                });
-            } catch (err) {
-                console.log('ServiceWorker registration failed: ', err);
-            }
-        }
-
-        // Check if app is launched as PWA
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA was installed');
-            const installButton = document.getElementById('installButton');
-            if (installButton) {
-                installButton.style.display = 'none';
-            }
-            analytics.logEvent('pwa_installed');
-        });
-
-        // Handle form submission
-        document.getElementById('eligibilityForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const form = e.target;
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const spinner = submitBtn.querySelector('.btn-spinner');
-            
-            // Validate referee phone number
-            const refPhone = document.getElementById('refPhone').value.trim();
-            if (!/^[0-9]{9}$/.test(refPhone)) {
-                showToast("Please enter a valid referee phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)");
-                return;
-            }
-
-            if (form.checkValidity()) {
-                btnText.textContent = 'Processing...';
-                spinner.style.display = 'inline-block';
-                submitBtn.disabled = true;
+            // Handle form submission
+            document.getElementById('eligibilityForm').addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                try {
-                    // Get current user
-                    const user = auth.currentUser;
-                    if (!user) {
-                        throw new Error("User not authenticated");
-                    }
+                const form = e.target;
+                const submitBtn = document.getElementById('submitBtn');
+                const btnText = submitBtn.querySelector('.btn-text');
+                const spinner = submitBtn.querySelector('.btn-spinner');
+                
+                let refPhone = document.getElementById('refPhone').value.trim();
+
+// Normalize the phone number
+if (refPhone.startsWith('07')) {
+    refPhone = refPhone.slice(1); // Converts 07XXXXXXXX to 7XXXXXXXX
+} else if (refPhone.startsWith('01')) {
+    refPhone = refPhone.slice(1); // Converts 01XXXXXXXX to 1XXXXXXXX
+}
+
+// Validate the normalized number
+if (!/^(7|1)[0-9]{8}$/.test(refPhone)) {
+    showToast("Please enter a valid referee phone number (e.g. 07XXXXXXXX, 7XXXXXXXX, 01XXXXXXXX, or 1XXXXXXXX)");
+    return;
+}
+
+
+
+// Now you can use normalizedPhone which will be either 7XXXXXXXX or 1XXXXXXXX
+
+                if (form.checkValidity()) {
+                    btnText.textContent = 'Processing...';
+                    spinner.style.display = 'inline-block';
+                    submitBtn.disabled = true;
                     
-                    // Get user's phone number from sessionStorage
-                    const userData = JSON.parse(sessionStorage.getItem('user'));
-                    if (!userData || !userData.phone) {
-                        throw new Error("User data not found");
-                    }
-                    
-                    // Prepare eligibility data
-                    const eligibilityData = {
-                        userId: user.uid,
-                        phone: userData.phone,
-                        education: document.getElementById('education').value,
-                        employment: document.getElementById('employment').value,
-                        income: document.getElementById('income').value,
-                        loanPurpose: document.getElementById('loanPurpose').value,
-                        referee: {
-                            name: document.getElementById('refName').value,
-                            phone: `+254${refPhone.replace(/^0/, '')}`,
-                            relationship: document.getElementById('relationship').value
-                        },
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        status: "pending"
-                    };
-                    
-                    // Save to Firestore
-                    await db.collection('eligibility').doc(user.uid).set(eligibilityData);
-                    
-                    // Log successful submission
-                    analytics.logEvent('eligibility_submitted', { status: "success" });
-                    
-                    showToast("Eligibility details submitted successfully!", false);
-                    
+                    // Simulate processing delay
                     setTimeout(() => {
+                        // Store form data in sessionStorage
+                        const formData = {
+                            education: document.getElementById('education').value,
+                            employment: document.getElementById('employment').value,
+                            income: document.getElementById('income').value,
+                            loanPurpose: document.getElementById('loanPurpose').value,
+                            referee: {
+                                name: document.getElementById('refName').value,
+                                phone: `254${refPhone.replace(/^0/, '')}`,
+                                relationship: document.getElementById('relationship').value
+                            },
+                            submittedAt: new Date().toISOString()
+                        };
+                        
+                        sessionStorage.setItem('eligibilityData', JSON.stringify(formData));
+                        
+                        // Redirect to loan approval page
                         window.location.href = 'loanapproval.html';
                     }, 1000);
-                } catch (error) {
-                    console.error("Error submitting eligibility:", error);
-                    analytics.logEvent('eligibility_submitted', { status: "failed", error: error.message });
-                    
-                    showToast("Failed to submit eligibility details. Please try again.");
-                    
-                    btnText.textContent = 'Submit Details';
-                    spinner.style.display = 'none';
-                    submitBtn.disabled = false;
                 }
+            });
+
+            // PWA Installation Code (simplified)
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
             }
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                const installButton = document.getElementById('installButton');
+                
+                if (!window.matchMedia('(display-mode: standalone)').matches) {
+                    installButton.style.display = 'flex';
+                    setTimeout(() => installButton.classList.add('show'), 500);
+                    
+                    installButton.addEventListener('click', () => {
+                        e.prompt();
+                        installButton.style.display = 'none';
+                    });
+                }
+            });
         });
     </script>
 </body>

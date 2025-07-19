@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Get quick loans up to Ksh 100,000 at 7.5% interest. Fast approval, flexible repayment. Apply online today!">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png" />
     <title>Loan Dashboard - Mkopo Rahisi</title>
@@ -11,8 +11,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mkopo Rahisi">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <meta name="theme-color" content="#2563eb">
 
     <style>
         :root {
@@ -25,8 +35,8 @@
             --success: #10b981;
             --warning: #f59e0b;
             --error: #ef4444;
-            --border-radius: 16px;
-            --box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --border-radius: 14px;
+            --box-shadow: 0 8px 24px rgba(31, 38, 135, 0.12);
             --transition: all 0.3s ease;
         }
 
@@ -40,20 +50,20 @@
         body {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             color: var(--dark);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
         }
 
         .dashboard-container {
-            max-width: 600px;
-            margin: 2rem auto;
+            max-width: 500px;
+            margin: 1rem auto;
             background-color: rgba(255, 255, 255, 0.98);
-            padding: 2.5rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.18);
@@ -65,59 +75,60 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%232563eb" opacity="0.05"><path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 10c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 20c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
-            transform: translate(30px, -30px);
+            transform: translate(20px, -20px);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             position: relative;
             z-index: 1;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .logo i {
             color: var(--accent);
+            font-size: 1.3rem;
         }
 
         .header h2 {
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .header p.subtitle {
             color: #64748b;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .summary-card {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: var(--border-radius);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         .summary-card::before {
@@ -137,7 +148,7 @@
         }
 
         .summary-item {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             position: relative;
             z-index: 1;
         }
@@ -147,32 +158,33 @@
         }
 
         .summary-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: rgba(255,255,255,0.8);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
 
         .summary-value {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: white;
         }
 
         .detail-card {
             background-color: white;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border-left: 4px solid var(--primary);
+            margin-bottom: 1.2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            border-left: 3px solid var(--primary);
         }
 
         .detail-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
             border-bottom: 1px solid #edf2f7;
+            font-size: 0.9rem;
         }
 
         .detail-item:last-child {
@@ -201,17 +213,17 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 1.2rem;
+            padding: 1rem;
             background: linear-gradient(135deg, var(--secondary) 0%, #0ea5e9 100%);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            margin: 2rem 0;
-            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3), 0 2px 4px -1px rgba(16, 185, 129, 0.2);
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2), 0 2px 4px -1px rgba(16, 185, 129, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -242,7 +254,7 @@
 
         .apply-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3), 0 4px 6px -2px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 8px 12px -3px rgba(16, 185, 129, 0.3), 0 4px 6px -2px rgba(16, 185, 129, 0.2);
         }
 
         .apply-button:disabled {
@@ -258,8 +270,9 @@
 
         .spinner {
             display: none;
-            margin-left: 12px;
+            margin-left: 10px;
             animation: spin 1s linear infinite;
+            font-size: 0.9rem;
         }
 
         @keyframes spin {
@@ -271,50 +284,118 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem;
-            margin-top: 1.5rem;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
             color: #64748b;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .security-badge i {
             color: var(--success);
+            font-size: 0.8rem;
         }
 
         .footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.2rem;
             background: var(--dark);
             color: white;
             margin-top: auto;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 8px;
             flex-wrap: wrap;
         }
 
         .footer-links a {
             color: white;
             text-decoration: none;
+            font-size: 0.8rem;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
         }
 
-        @media (max-width: 768px) {
+        /* PWA Install Button */
+        #installButton {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 999;
+            width: auto;
+            min-width: 240px;
+            white-space: nowrap;
+            transition: transform 0.3s ease;
+            animation: pulse-blue 2s infinite;
+        }
+
+        #installButton.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #installButton i {
+            font-size: 1rem;
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
             .dashboard-container {
-                padding: 1.8rem;
+                padding: 1.2rem;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .summary-value {
+                font-size: 1.2rem;
             }
             
             .detail-item {
-                flex-direction: column;
-                gap: 0.3rem;
+                font-size: 0.85rem;
+            }
+            
+            .apply-button {
+                padding: 0.9rem;
+                font-size: 0.95rem;
+            }
+            
+            #installButton {
+                bottom: 60px;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                min-width: 90%;
+                max-width: 280px;
             }
         }
     </style>
@@ -334,7 +415,7 @@
         <div class="summary-card">
             <div class="summary-item">
                 <div class="summary-label">Loan Amount Qualified</div>
-                <div class="summary-value">Ksh 14,500</div>
+                <div class="summary-value" id="qualified-amount">Ksh 14,500</div>
             </div>
             <div class="summary-item">
                 <div class="summary-label">Loan Term</div>
@@ -342,7 +423,7 @@
             </div>
             <div class="summary-item">
                 <div class="summary-label">Amount to Receive</div>
-                <div class="summary-value">Ksh 13,456</div>
+                <div class="summary-value" id="net-amount">Ksh 13,456</div>
             </div>
         </div>
 
@@ -389,28 +470,104 @@
         <div>© 2025 Mkopo Rahisi. Licensed by CBK.</div>
     </footer>
 
+    <!-- PWA Install Button -->
+    <button id="installButton" style="display: none;">
+        <i class="fas fa-download"></i> Install App
+    </button>
+
     <script>
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyCjnv5_IGHQVa5tXUBmH6FDYxBUvSREVsQ",
-            authDomain: "okoa-mkopo-straight-to-m-pesa.firebaseapp.com",
-            projectId: "okoa-mkopo-straight-to-m-pesa",
-            storageBucket: "okoa-mkopo-straight-to-m-pesa.appspot.com",
-            messagingSenderId: "398221059857",
-            appId: "1:398221059857:web:92874816cd6a8365008eb0",
-            measurementId: "G-T0MQ5Q1FW1"
+            apiKey: "AIzaSyCASu52RKh0cUP74lNVONDxkH0IKC7B9Ak",
+            authDomain: "mkopo-rahisi-2dee5.firebaseapp.com",
+            projectId: "mkopo-rahisi-2dee5",
+            storageBucket: "mkopo-rahisi-2dee5.firebasestorage.app",
+            messagingSenderId: "463971994215",
+            appId: "1:463971994215:web:2d3ef1001cee2b201be2c2",
+            measurementId: "G-BRKFJJR3BM"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
         const db = firebase.database();
+        const analytics = firebase.analytics();
 
+        // Check if user is logged in
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                // User not logged in, redirect to login page
+                window.location.href = 'login.html';
+            } else {
+                // User is logged in, proceed with page functionality
+                analytics.logEvent('dashboard_viewed');
+            }
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                registerServiceWorker();
+            });
+        }
+
+        async function registerServiceWorker() {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                console.log('ServiceWorker registration successful');
+
+                // Handle PWA install prompt
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    const installButton = document.getElementById('installButton');
+                    
+                    // Only show the button if not already installed
+                    if (!window.matchMedia('(display-mode: standalone)').matches) {
+                        installButton.style.display = 'flex';
+                        setTimeout(() => installButton.classList.add('show'), 500);
+                        
+                        installButton.addEventListener('click', () => {
+                            e.prompt();
+                            installButton.style.display = 'none';
+                        });
+                        
+                        e.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted install prompt');
+                                analytics.logEvent('pwa_installed');
+                            } else {
+                                console.log('User dismissed install prompt');
+                            }
+                        });
+                    }
+                });
+            } catch (err) {
+                console.log('ServiceWorker registration failed: ', err);
+            }
+        }
+
+        // Check if app is launched as PWA
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+        });
+
+        // Page functionality
         document.addEventListener('DOMContentLoaded', () => {
             const selectedAmount = sessionStorage.getItem('selectedAmount') || 'Ksh 0';
             const selectedLimit = sessionStorage.getItem('loanLimit') || 'Ksh 0';
 
+            // Calculate loan amounts
             const numericLimit = parseFloat(selectedLimit.replace(/[^\d.]/g, '')) || 0;
-            const disbursable = (numericLimit * 0.928).toFixed(2);
-            const interest = (numericLimit - disbursable).toFixed(2);
+            const interest = (numericLimit * 0.075).toFixed(2); // 7.5% interest
+            const disbursable = (numericLimit - interest).toFixed(2);
 
+            // Update all displayed values
+            document.getElementById('qualified-amount').textContent = selectedLimit;
+            document.getElementById('net-amount').textContent = `Ksh ${disbursable}`;
             document.getElementById('selected-limit').textContent = selectedLimit;
             document.getElementById('service-fee').textContent = selectedAmount;
             document.getElementById('interest-applied').textContent = `Ksh ${interest}`;
@@ -437,5 +594,4 @@
         });
     </script>
 </body>
-
 </html>
