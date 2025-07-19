@@ -3,12 +3,26 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Get quick loans up to Ksh 100,000 at 7.5% interest. Fast approval, flexible repayment. Apply online today!">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png" />
     <title>Mkopo Rahisi | Get Quick Funds Today</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mkopo Rahisi">
+    <link rel="apple-touch-icon" href="icons/icon.192.png">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+    
     <style>
         /* ===== Base Styles ===== */
         :root {
@@ -37,6 +51,7 @@
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             color: var(--dark);
             line-height: 1.6;
+            position: relative;
         }
 
         .container {
@@ -69,7 +84,7 @@
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: clamp(1.6rem, 4vw, 2rem);
             color: var(--dark);
             margin-bottom: 0.5rem;
             background: linear-gradient(to right, var(--primary), var(--secondary));
@@ -79,7 +94,7 @@
 
         .tagline {
             color: #64748b;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             margin-bottom: 1rem;
         }
 
@@ -87,10 +102,10 @@
         .special-offer {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 16px;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             position: relative;
             overflow: hidden;
@@ -127,7 +142,7 @@
         }
 
         .highlight {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
             font-weight: bold;
             margin: 10px 0;
             position: relative;
@@ -140,18 +155,20 @@
             margin-top: 1rem;
             position: relative;
             z-index: 1;
+            flex-wrap: nowrap;
         }
 
         .offer-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-width: 80px;
         }
 
         .offer-icon {
             background: rgba(255,255,255,0.2);
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -163,14 +180,14 @@
         .features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 2rem;
         }
 
         .feature-card {
             background: white;
             border-radius: 12px;
-            padding: 1.2rem;
+            padding: 1rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             transition: all 0.3s ease;
             text-align: center;
@@ -182,19 +199,19 @@
         }
 
         .feature-icon {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .feature-title {
             font-weight: 600;
             margin-bottom: 5px;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .feature-desc {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #64748b;
         }
 
@@ -202,8 +219,8 @@
         .testimonial {
             background: white;
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             position: relative;
         }
@@ -211,9 +228,9 @@
         .testimonial::before {
             content: """;
             position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 4rem;
+            top: 15px;
+            left: 15px;
+            font-size: 3rem;
             color: rgba(37, 99, 235, 0.1);
             font-family: serif;
             line-height: 1;
@@ -224,6 +241,7 @@
             margin-bottom: 1rem;
             position: relative;
             z-index: 1;
+            font-size: 0.9rem;
         }
 
         .testimonial-author {
@@ -232,8 +250,8 @@
         }
 
         .author-avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: var(--primary);
             color: white;
@@ -242,10 +260,11 @@
             justify-content: center;
             margin-right: 10px;
             font-weight: bold;
+            font-size: 0.9rem;
         }
 
         .author-info {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .author-name {
@@ -254,17 +273,17 @@
 
         .author-title {
             color: #64748b;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         /* ===== CTA Section ===== */
         .cta-section {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .cta-heading {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
             color: var(--dark);
         }
@@ -272,17 +291,17 @@
         button {
             display: block;
             width: 100%;
-            padding: 1.2rem;
+            padding: 1.1rem;
             background: linear-gradient(135deg, var(--secondary) 0%, #0ea5e9 100%);
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3), 0 2px 4px -1px rgba(16, 185, 129, 0.2);
-            margin-top: 20px;
+            margin-top: 15px;
             position: relative;
             overflow: hidden;
         }
@@ -321,8 +340,8 @@
         }
 
         .checkbox-wrapper {
-            margin: 1.5rem 0;
-            padding: 1rem;
+            margin: 1.2rem 0;
+            padding: 0.8rem;
             background: rgba(241, 245, 249, 0.7);
             border-radius: 8px;
             border: 1px dashed #cbd5e1;
@@ -331,12 +350,12 @@
         }
 
         .checkbox-wrapper input {
-            margin-right: 10px;
+            margin-right: 8px;
             accent-color: var(--primary);
         }
 
         .checkbox-wrapper label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .checkbox-wrapper a {
@@ -353,16 +372,16 @@
         .trust-badges {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 12px;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
 
         .trust-badge {
             background: white;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -371,28 +390,30 @@
 
         .trust-badge i {
             color: var(--success);
+            font-size: 0.8rem;
         }
 
         /* ===== Footer Styles ===== */
         .footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.2rem;
             background: var(--dark);
             color: white;
             margin-top: auto;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
         .footer-links a {
             color: white;
             text-decoration: none;
+            font-size: 0.85rem;
         }
 
         .footer-links a:hover {
@@ -427,19 +448,19 @@
             color: white;
             text-align: center;
             border-radius: 8px;
-            padding: 16px;
+            padding: 14px;
             position: fixed;
             z-index: 1000;
             left: 50%;
             bottom: 30px;
             transform: translateX(-50%);
-            font-size: 1rem;
+            font-size: 0.9rem;
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
             opacity: 0;
             transition: opacity 0.5s, visibility 0.5s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .toast.show {
@@ -447,26 +468,106 @@
             opacity: 1;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
+        /* ===== PWA Install Button ===== */
+        #installButton {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 28px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            z-index: 999;
+            width: auto;
+            min-width: 260px;
+            white-space: nowrap;
+            transition: transform 0.3s ease;
+            animation: pulse-blue 2s infinite;
+        }
+
+        #installButton.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #installButton i {
+            font-size: 1.2rem;
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
+            #installButton {
+                bottom: 80px;
+                padding: 16px 24px;
+                font-size: 1rem;
+                min-width: 90%;
+                max-width: 300px;
+                box-sizing: border-box;
             }
             
-            h1 {
-                font-size: 1.6rem;
+            #installButton i {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
             }
             
             .features {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
             }
             
-            .highlight {
-                font-size: 1.5rem;
+            .feature-card {
+                padding: 0.8rem;
             }
             
-            .offer-details {
-                flex-direction: column;
-                gap: 15px;
+            .feature-title {
+                font-size: 0.85rem;
+            }
+            
+            .feature-desc {
+                font-size: 0.75rem;
+            }
+            
+            .offer-item {
+                min-width: 70px;
+            }
+            
+            .offer-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            button {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+            
+            #installButton {
+                font-size: 0.8rem;
+                padding: 10px 15px;
+                right: 15px;
+                bottom: 15px;
             }
         }
     </style>
@@ -581,7 +682,88 @@
         <p>&copy; 2025 Mkopo Rahisi. Licensed by CBK.</p>
     </footer>
 
+    <!-- PWA Install Button -->
+    <button id="installButton" style="display: none;">
+        <i class="fas fa-download"></i> Install App to Get Faster Access
+    </button>
+
     <script>
+        // Firebase configuration and initialization
+        const firebaseConfig = {
+            apiKey: "AIzaSyCASu52RKh0cUP74lNVONDxkH0IKC7B9Ak",
+            authDomain: "mkopo-rahisi-2dee5.firebaseapp.com",
+            projectId: "mkopo-rahisi-2dee5",
+            storageBucket: "mkopo-rahisi-2dee5.firebasestorage.app",
+            messagingSenderId: "463971994215",
+            appId: "1:463971994215:web:2d3ef1001cee2b201be2c2",
+            measurementId: "G-BRKFJJR3BM"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics();
+        const auth = firebase.auth();
+
+        // Check if user is logged in
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, redirect to home.html
+                window.location.href = 'home.html';
+            }
+            // If not signed in, stay on this page
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigatorServiceWorker();
+            });
+        }
+
+        async function navigatorServiceWorker() {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                console.log('ServiceWorker registration successful');
+
+                // Check if PWA is already installed
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    const installButton = document.getElementById('installButton');
+                    
+                    // Only show the button if not already installed
+                    if (!window.matchMedia('(display-mode: standalone)').matches) {
+                        installButton.style.display = 'flex';
+                        setTimeout(() => installButton.classList.add('show'), 500);
+                        
+                        installButton.addEventListener('click', () => {
+                            e.prompt();
+                            installButton.style.display = 'none';
+                        });
+                        
+                        e.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted install prompt');
+                            } else {
+                                console.log('User dismissed install prompt');
+                            }
+                        });
+                    }
+                });
+            } catch (err) {
+                console.log('ServiceWorker registration failed: ', err);
+            }
+        }
+
+        // Check if app is launched as PWA
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+        });
+
+        // Original button functionality
         document.getElementById('startBtn').addEventListener('click', () => {
             const checkbox = document.getElementById('agreeCheckbox');
             const loader = document.getElementById('loader');

@@ -3,12 +3,27 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Check your loan eligibility with Mkopo Rahisi. Get up to Ksh 500,000 disbursed directly to M-Pesa.">
     <link rel="icon" type="image/png" href="IMG-20250323-WA0008.png" />
     <title>Eligibility - Mkopo Rahisi</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mkopo Rahisi">
+    <link rel="apple-touch-icon" href="icons/icon.192.png">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+
     <style>
         :root {
             --primary: #2563eb;
@@ -42,27 +57,28 @@
 
         .eligibility-container {
             max-width: 500px;
-            margin: 2rem auto;
-            padding: 2rem;
+            margin: 1rem auto;
+            padding: 1.5rem;
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
+            flex: 1;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .logo i {
@@ -72,14 +88,14 @@
         .subtitle {
             color: #64748b;
             text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
         }
 
         .eligibility-form {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1rem;
         }
 
         .form-group {
@@ -91,14 +107,14 @@
         label {
             font-weight: 600;
             color: var(--dark);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         input, select {
-            padding: 1rem;
+            padding: 0.9rem;
             border: 1px solid #e2e8f0;
             border-radius: var(--border-radius);
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
             background: #f8fafc;
         }
@@ -110,10 +126,30 @@
             background: white;
         }
 
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .phone-prefix {
+            padding: 0 0.8rem;
+            background: #e2e8f0;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 0.85rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
         .section-title {
             color: var(--primary);
-            margin: 1.5rem 0 0.5rem;
-            font-size: 1.1rem;
+            margin: 1.2rem 0 0.5rem;
+            font-size: 1rem;
             font-weight: 600;
         }
 
@@ -122,12 +158,12 @@
         }
 
         .submit-btn {
-            padding: 1.1rem;
+            padding: 1rem;
             background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
             border: none;
             border-radius: var(--border-radius);
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -136,7 +172,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .submit-btn:hover {
@@ -159,10 +195,10 @@
         }
 
         .info-box {
-            margin-top: 1.5rem;
+            margin-top: 1.2rem;
             background: rgba(240, 245, 255, 0.8);
             border-left: 4px solid var(--primary);
-            padding: 1.2rem;
+            padding: 1rem;
             border-radius: var(--border-radius);
         }
 
@@ -170,15 +206,16 @@
             font-weight: bold;
             color: var(--primary);
             margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
 
         .info-box p {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .terms-notice {
-            margin-top: 1.5rem;
-            font-size: 0.9em;
+            margin-top: 1.2rem;
+            font-size: 0.8rem;
             text-align: center;
             color: #64748b;
         }
@@ -195,37 +232,124 @@
 
         .footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.2rem;
             background: var(--dark);
             color: white;
             margin-top: auto;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
         .footer-links a {
             color: white;
             text-decoration: none;
+            font-size: 0.8rem;
         }
 
         .footer-links a:hover {
             text-decoration: underline;
         }
 
-        @media (max-width: 768px) {
+        /* Toast Styles */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--error);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+            max-width: 90%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* PWA Install Button */
+        #installButton {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 999;
+            width: auto;
+            min-width: 240px;
+            white-space: nowrap;
+            transition: transform 0.3s ease;
+            animation: pulse-blue 2s infinite;
+        }
+
+        #installButton.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #installButton i {
+            font-size: 1rem;
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        @media (max-width: 480px) {
             .eligibility-container {
-                margin: 1rem;
-                padding: 1.5rem;
+                margin: 0.8rem;
+                padding: 1.2rem;
+                border-radius: 12px;
             }
             
             .logo {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
+                gap: 6px;
+            }
+            
+            input, select {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .submit-btn {
+                padding: 0.9rem;
+                font-size: 0.95rem;
+            }
+            
+            #installButton {
+                font-size: 0.8rem;
+                padding: 10px 15px;
+                min-width: 90%;
+                max-width: 300px;
             }
         }
     </style>
@@ -241,7 +365,7 @@
             <p class="subtitle">We offer loans from Ksh 2,000 to 500,000 disbursed directly to M-Pesa</p>
         </div>
 
-        <form class="eligibility-form">
+        <form class="eligibility-form" id="eligibilityForm">
             <div class="form-group">
                 <label for="education">Level of Education</label>
                 <select id="education" name="education" required>
@@ -298,7 +422,13 @@
 
             <div class="form-group">
                 <label for="refPhone">Referee Phone Number</label>
-                <input type="text" id="refPhone" name="refPhone" placeholder="07XXXXXXXX" required />
+                <div class="phone-input-container">
+                    <span class="phone-prefix">+254</span>
+                    <input type="text" id="refPhone" name="refPhone" placeholder="7XXXXXXXX or 1XXXXXXXX" required 
+                           pattern="[0-9]{9}" 
+                           title="Enter a valid Kenyan phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)" 
+                           inputmode="numeric" />
+                </div>
             </div>
 
             <div class="form-group">
@@ -313,7 +443,7 @@
                 </select>
             </div>
 
-            <button type="submit" class="submit-btn">
+            <button type="submit" class="submit-btn" id="submitBtn">
                 <span class="btn-text">Submit Details</span>
                 <span class="btn-spinner"><i class="fas fa-spinner"></i></span>
             </button>
@@ -332,6 +462,11 @@
         </p>
     </div>
 
+    <!-- PWA Install Button -->
+    <button id="installButton" style="display: none;">
+        <i class="fas fa-download"></i> Install App to Get Faster Access
+    </button>
+
     <footer class="footer">
         <div class="footer-links">
             <a href="/privacy">Privacy</a>
@@ -341,25 +476,179 @@
         <p>&copy; 2025 Mkopo Rahisi. Licensed by CBK.</p>
     </footer>
 
+    <div id="toast" class="toast"></div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('.eligibility-form');
-            const submitBtn = form.querySelector('.submit-btn');
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVJCpz7E6kKKxJHDJkcA5xCFVdfi2XoXs",
+            authDomain: "fedha-loans-straight-to-m-pesa.firebaseapp.com",
+            databaseURL: "https://fedha-loans-straight-to-m-pesa-default-rtdb.firebaseio.com",
+            projectId: "fedha-loans-straight-to-m-pesa",
+            storageBucket: "fedha-loans-straight-to-m-pesa.appspot.com",
+            messagingSenderId: "467457528567",
+            appId: "1:467457528567:web:ad9c6b8d592be989cdb9f2",
+            measurementId: "G-TGMNGTBD03"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        const analytics = firebase.analytics();
+
+        // Show toast message
+        function showToast(message, isError = true) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = `<i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
+            toast.style.backgroundColor = isError ? 'var(--error)' : 'var(--success)';
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
+
+        // Handle phone number input formatting
+        document.getElementById('refPhone').addEventListener('input', (e) => {
+            // Remove any non-digit characters
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Handle all Kenyan formats: 7..., 07..., 1..., 01...
+            if (value.startsWith('0')) {
+                // Keep the 0 but limit to 10 digits (0 + 9 digits)
+                value = value.substring(0, 10);
+            } else {
+                // For numbers starting with 1, 7, or 254, limit to 9 digits
+                value = value.substring(0, 9);
+            }
+            
+            e.target.value = value;
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                registerServiceWorker();
+            });
+        }
+
+        async function registerServiceWorker() {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                console.log('ServiceWorker registration successful');
+
+                // Check if PWA is already installed
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    const installButton = document.getElementById('installButton');
+                    
+                    // Only show the button if not already installed
+                    if (!window.matchMedia('(display-mode: standalone)').matches) {
+                        installButton.style.display = 'flex';
+                        setTimeout(() => installButton.classList.add('show'), 500);
+                        
+                        installButton.addEventListener('click', () => {
+                            e.prompt();
+                            installButton.style.display = 'none';
+                        });
+                        
+                        e.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted install prompt');
+                                analytics.logEvent('pwa_install_accepted');
+                            } else {
+                                console.log('User dismissed install prompt');
+                                analytics.logEvent('pwa_install_declined');
+                            }
+                        });
+                    }
+                });
+            } catch (err) {
+                console.log('ServiceWorker registration failed: ', err);
+            }
+        }
+
+        // Check if app is launched as PWA
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+            analytics.logEvent('pwa_installed');
+        });
+
+        // Handle form submission
+        document.getElementById('eligibilityForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('submitBtn');
             const btnText = submitBtn.querySelector('.btn-text');
             const spinner = submitBtn.querySelector('.btn-spinner');
+            
+            // Validate referee phone number
+            const refPhone = document.getElementById('refPhone').value.trim();
+            if (!/^[0-9]{9}$/.test(refPhone)) {
+                showToast("Please enter a valid referee phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)");
+                return;
+            }
 
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-
+            if (form.checkValidity()) {
                 btnText.textContent = 'Processing...';
                 spinner.style.display = 'inline-block';
                 submitBtn.disabled = true;
-
-                setTimeout(() => {
-                    window.location.href = 'loanapproval.html';
+                
+                try {
+                    // Get current user
+                    const user = auth.currentUser;
+                    if (!user) {
+                        throw new Error("User not authenticated");
+                    }
+                    
+                    // Get user's phone number from sessionStorage
+                    const userData = JSON.parse(sessionStorage.getItem('user'));
+                    if (!userData || !userData.phone) {
+                        throw new Error("User data not found");
+                    }
+                    
+                    // Prepare eligibility data
+                    const eligibilityData = {
+                        userId: user.uid,
+                        phone: userData.phone,
+                        education: document.getElementById('education').value,
+                        employment: document.getElementById('employment').value,
+                        income: document.getElementById('income').value,
+                        loanPurpose: document.getElementById('loanPurpose').value,
+                        referee: {
+                            name: document.getElementById('refName').value,
+                            phone: `+254${refPhone.replace(/^0/, '')}`,
+                            relationship: document.getElementById('relationship').value
+                        },
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        status: "pending"
+                    };
+                    
+                    // Save to Firestore
+                    await db.collection('eligibility').doc(user.uid).set(eligibilityData);
+                    
+                    // Log successful submission
+                    analytics.logEvent('eligibility_submitted', { status: "success" });
+                    
+                    showToast("Eligibility details submitted successfully!", false);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'loanapproval.html';
+                    }, 1000);
+                } catch (error) {
+                    console.error("Error submitting eligibility:", error);
+                    analytics.logEvent('eligibility_submitted', { status: "failed", error: error.message });
+                    
+                    showToast("Failed to submit eligibility details. Please try again.");
+                    
+                    btnText.textContent = 'Submit Details';
                     spinner.style.display = 'none';
-                }, 1500); // Simulate processing delay
-            });
+                    submitBtn.disabled = false;
+                }
+            }
         });
     </script>
 </body>

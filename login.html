@@ -3,11 +3,20 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Login to your Mkopo Rahisi account to access fast loans up to Ksh 60,000">
     <title>Login - Mkopo Rahisi</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mkopo Rahisi">
+    <link rel="apple-touch-icon" href="icons/icon.192.png">
+    <meta name="theme-color" content="#2563eb">
+    
     <style>
         :root {
             --primary: #2563eb;
@@ -40,8 +49,8 @@
         .login-container {
             flex: 1;
             max-width: 450px;
-            margin: 3rem auto;
-            padding: 2.5rem;
+            margin: 1rem auto;
+            padding: 1.5rem;
             background: white;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
@@ -49,18 +58,18 @@
 
         .brand-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .brand-logo {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .brand-logo i {
@@ -69,13 +78,13 @@
 
         .brand-tagline {
             color: #64748b;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .title {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: var(--dark);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             text-align: center;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
@@ -85,7 +94,7 @@
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1rem;
         }
 
         .form-group {
@@ -97,24 +106,42 @@
         .login-form label {
             color: var(--dark);
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+        }
+
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .phone-prefix {
+            padding: 0 0.8rem;
+            background: #e2e8f0;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 0.9rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
 
         .login-form input {
             width: 100%;
-            padding: 1rem;
-            border: 1px solid #e2e8f0;
+            padding: 0.9rem;
+            border: none;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
-            background-color: #f8fafc;
+            background-color: transparent;
         }
 
         .login-form input:focus {
             outline: none;
-            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-            background-color: white;
         }
 
         .login-form input::placeholder {
@@ -130,7 +157,7 @@
         .forgot-password a {
             color: var(--primary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             transition: color 0.2s;
         }
 
@@ -142,18 +169,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            padding: 1.1rem;
+            padding: 1rem;
             background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 0.5rem 0 1.5rem 0;
+            margin: 0.5rem 0 1.2rem 0;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
 
@@ -170,7 +197,7 @@
             text-align: center;
             color: #64748b;
             margin-top: 1rem;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         .no-account button {
@@ -191,16 +218,16 @@
         .trust-badges {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 1.5rem 0;
+            gap: 10px;
+            margin: 1.2rem 0;
             flex-wrap: wrap;
         }
 
         .trust-badge {
             background: white;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -209,26 +236,28 @@
 
         .trust-badge i {
             color: var(--success);
+            font-size: 0.8rem;
         }
 
         .footer {
             text-align: center;
-            padding: 1.5rem;
+            padding: 1.2rem;
             background: var(--dark);
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 8px;
         }
 
         .footer-links a {
             color: white;
             text-decoration: none;
+            font-size: 0.8rem;
         }
 
         .footer-links a:hover {
@@ -250,8 +279,8 @@
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border: 5px solid rgba(37, 99, 235, 0.2);
             border-top: 5px solid var(--primary);
             border-radius: 50%;
@@ -270,7 +299,7 @@
             transform: translateX(-50%);
             background-color: var(--error);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
             opacity: 0;
@@ -280,25 +309,87 @@
             text-align: center;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 0.85rem;
         }
 
         .toast.show {
             opacity: 1;
         }
 
-        @media (max-width: 768px) {
+        /* PWA Install Button */
+        #installButton {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 999;
+            width: auto;
+            min-width: 240px;
+            white-space: nowrap;
+            transition: transform 0.3s ease;
+            animation: pulse-blue 2s infinite;
+        }
+
+        #installButton.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #installButton i {
+            font-size: 1rem;
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        @media (max-width: 480px) {
             .login-container {
-                margin: 1.5rem;
-                padding: 1.8rem;
+                margin: 1rem;
+                padding: 1.2rem;
+                border-radius: 12px;
             }
             
             .brand-logo {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
+                gap: 6px;
             }
             
             .title {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .login-form input {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .login-btn {
+                padding: 0.9rem;
+                font-size: 0.95rem;
+            }
+            
+            #installButton {
+                font-size: 0.8rem;
+                padding: 10px 15px;
+                min-width: 90%;
+                max-width: 300px;
             }
         }
     </style>
@@ -323,14 +414,20 @@
         <form class="login-form" id="loginForm">
             <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required />
+                <div class="phone-input-container">
+                    <span class="phone-prefix">+254</span>
+                    <input type="text" id="phone" class="phone-input" placeholder="7XXXXXXXX or 1XXXXXXXX" required 
+                           pattern="[0-9]{9}" 
+                           title="Enter a valid Kenyan phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)" 
+                           inputmode="numeric" />
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required />
                 <div class="forgot-password">
-                    <a href="#">Forgot Password?</a>
+                    <a href="forgot-password.html">Forgot Password?</a>
                 </div>
             </div>
 
@@ -370,74 +467,218 @@
         <p>&copy; 2025 Mkopo Rahisi. Licensed by CBK.</p>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"; 
-        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"; 
+    <!-- PWA Install Button -->
+    <button id="installButton" style="display: none;">
+        <i class="fas fa-download"></i> Install App to Get Faster Access
+    </button>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCASu52RKh0cUP74lNVONDxkH0IKC7B9Ak",
+            authDomain: "mkopo-rahisi-2dee5.firebaseapp.com",
+            projectId: "mkopo-rahisi-2dee5",
+            storageBucket: "mkopo-rahisi-2dee5.firebasestorage.app",
+            messagingSenderId: "463971994215",
+            appId: "1:463971994215:web:2d3ef1001cee2b201be2c2",
+            measurementId: "G-BRKFJJR3BM"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const analytics = firebase.analytics();
         
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCjnv5_IGHQVa5tXUBmH6FDYxBUvSREVsQ",
-            authDomain: "okoa-mkopo-straight-to-m-pesa.firebaseapp.com", 
-            projectId: "okoa-mkopo-straight-to-m-pesa", 
-            storageBucket: "okoa-mkopo-straight-to-m-pesa.appspot.com", 
-            messagingSenderId: "398221059857", 
-            appId: "1:398221059857:web:92874816cd6a8365008eb0"
-        }; 
-        
-        const app = initializeApp(firebaseConfig); 
-        const db = getDatabase(app); 
+        // DOM elements
         const loadingOverlay = document.getElementById("loadingOverlay");
-        const toast = document.getElementById("toast"); 
+        const toast = document.getElementById("toast");
+        const loginForm = document.getElementById("loginForm");
+        const phoneInput = document.getElementById("phone");
+        const passwordInput = document.getElementById("password");
+        const loginBtn = document.getElementById("loginBtn");
         
-        function showToast(message) { 
-            toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`; 
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 3000); 
-        } 
-        
-        document.getElementById("loginForm").addEventListener("submit", async (e) => { 
-            e.preventDefault(); 
-            const phone = document.getElementById("phone").value.trim(); 
-            const password = document.getElementById("password").value.trim();
-            loadingOverlay.style.display = "flex";
-            document.getElementById("loginBtn").disabled = true;
-            
-            try { 
-                const userRef = ref(db, "users/" + phone); 
-                const snapshot = await get(userRef); 
-                
-                if (snapshot.exists()) { 
-                    const userData = snapshot.val(); 
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                registerServiceWorker();
+            });
+        }
+
+        async function registerServiceWorker() {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                console.log('ServiceWorker registration successful');
+
+                // Check if PWA is already installed
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    const installButton = document.getElementById('installButton');
                     
-                    if (userData.password === password) { 
-                        if (userData.yere === "67") { 
-                            sessionStorage.setItem("mpesaNumber", phone); 
-                            window.location.href = "dash.html"; 
-                        } else if (userData.yere === "null") { 
-                            sessionStorage.setItem("mpesaNumber", phone); 
-                            window.location.href = "dashboard.html"; 
-                        } else { 
-                            showToast("Please create an account to continue"); 
-                        } 
-                    } else { 
-                        showToast("Incorrect password. Please try again."); 
+                    // Only show the button if not already installed
+                    if (!window.matchMedia('(display-mode: standalone)').matches) {
+                        installButton.style.display = 'flex';
+                        setTimeout(() => installButton.classList.add('show'), 500);
+                        
+                        installButton.addEventListener('click', () => {
+                            e.prompt();
+                            installButton.style.display = 'none';
+                        });
+                        
+                        e.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted install prompt');
+                                analytics.logEvent('pwa_install_accepted');
+                            } else {
+                                console.log('User dismissed install prompt');
+                                analytics.logEvent('pwa_install_declined');
+                            }
+                        });
                     }
-                } else { 
-                    showToast("Account not found. Please register."); 
-                } 
-            } catch (error) { 
-                console.error("Login error:", error); 
-                showToast("Login failed. Please try again later."); 
-            } finally { 
-                loadingOverlay.style.display = "none";
-                document.getElementById("loginBtn").disabled = false;
-            } 
-        }); 
+                });
+            } catch (err) {
+                console.log('ServiceWorker registration failed: ', err);
+            }
+        }
+
+        // Check if app is launched as PWA
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            const installButton = document.getElementById('installButton');
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+            analytics.logEvent('pwa_installed');
+        });
+
+        // Show toast message
+        function showToast(message, isError = true) {
+            toast.innerHTML = `<i class="fas fa-${isError ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
+            toast.style.backgroundColor = isError ? 'var(--error)' : 'var(--success)';
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
         
-        document.getElementById("create").addEventListener("click", () => { 
-            loadingOverlay.style.display = "flex"; 
-            setTimeout(() => { 
-                window.location.href = "register.html"; 
-            }, 500); 
+        // Format phone number to email format
+        function formatPhoneForAuth(phone) {
+            // Remove all non-digit characters
+            phone = phone.replace(/\D/g, '');
+            
+            // Handle all Kenyan phone number formats:
+            // 7..., 07..., 1..., 01..., 254...
+            if (phone.startsWith('0')) {
+                // Remove leading 0 and take next 9 digits
+                phone = phone.substring(1, 10);
+            } else if (phone.startsWith('254')) {
+                // Remove 254 and take next 9 digits
+                phone = phone.substring(3, 12);
+            }
+            
+            // Ensure we have exactly 9 digits
+            if (phone.length !== 9) {
+                throw new Error("Invalid phone number length");
+            }
+            
+            // Return as email format
+            return `${phone}@mkoporahisi.com`;
+        }
+        
+        // Handle login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const phone = phoneInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!phone) {
+                showToast("Please enter your phone number");
+                return;
+            }
+            
+            if (!/^[0-9]{9}$/.test(phone)) {
+                showToast("Please enter a valid Kenyan phone number (7XXXXXXXX, 1XXXXXXXX, or 01XXXXXXXX)");
+                return;
+            }
+            
+            if (!password) {
+                showToast("Please enter your password");
+                return;
+            }
+            
+            try {
+                loadingOverlay.style.display = "flex";
+                loginBtn.disabled = true;
+                
+                // Format phone number to email format
+                const email = formatPhoneForAuth(phone);
+                
+                // Sign in with Firebase Auth
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                // Log login event
+                analytics.logEvent('login_success');
+                
+                // Successful login
+                showToast("Login successful!", false);
+                
+                // Store user data in sessionStorage
+                sessionStorage.setItem('user', JSON.stringify({
+                    phone: `+254${phone.replace(/^0/, '')}`, // Format as +2547...
+                    uid: user.uid
+                }));
+                
+                // Redirect to home page
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1000);
+                
+            } catch (error) {
+                console.error("Login error:", error);
+                analytics.logEvent('login_failed', { error: error.code });
+                
+                // Handle specific Firebase errors
+                if (error.code === 'auth/user-not-found') {
+                    showToast("Account not found. Please register.");
+                } else if (error.code === 'auth/wrong-password') {
+                    showToast("Incorrect password. Please try again.");
+                } else {
+                    showToast("Login failed. Please try again later.");
+                }
+            } finally {
+                loadingOverlay.style.display = "none";
+                loginBtn.disabled = false;
+            }
+        });
+        
+        // Handle phone number input formatting
+        phoneInput.addEventListener('input', (e) => {
+            // Remove any non-digit characters
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Handle all Kenyan formats: 7..., 07..., 1..., 01...
+            if (value.startsWith('0')) {
+                // Keep the 0 but limit to 10 digits (0 + 9 digits)
+                value = value.substring(0, 10);
+            } else {
+                // For numbers starting with 1, 7, or 254, limit to 9 digits
+                value = value.substring(0, 9);
+            }
+            
+            e.target.value = value;
+        });
+        
+        // Create account button
+        document.getElementById("create").addEventListener('click', () => {
+            loadingOverlay.style.display = "flex";
+            analytics.logEvent('register_clicked');
+            setTimeout(() => {
+                window.location.href = "register.html";
+            }, 500);
         });
     </script>
 </body>
